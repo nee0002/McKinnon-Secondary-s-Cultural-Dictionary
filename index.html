@@ -532,7 +532,7 @@ function checkConfig() {
 async function loadData(isAdminRefresh = false) {
   if (!checkConfig()) {
     // Not configured — fall back to seed data for preview
-    document.getElementById('setupBanner').style.display = 'block';
+    
     entries = JSON.parse(JSON.stringify(SEED.entries));
     pendingEntries = JSON.parse(JSON.stringify(SEED.pending));
     accessRequests = JSON.parse(JSON.stringify(SEED.access));
