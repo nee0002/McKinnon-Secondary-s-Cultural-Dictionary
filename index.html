@@ -112,8 +112,7 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
 .img-upload-hint{font-size:0.75rem;color:var(--ink3);margin-top:3px}
 .img-preview-wrap{position:relative;margin-top:0.75rem}
 .img-preview{width:100%;max-height:180px;object-fit:cover;border-radius:6px;display:block}
-.img-preview-remove{position:absolute;top:6px;right:6px;background:rgba(26,22,18,0.7);color:#fff;border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;transition:background 0.15s}
-.img-preview-remove:hover{background:var(--accent)}
+.img-preview-remove{position:absolute;top:6px;right:6px;background:rgba(26,22,18,0.7);color:#fff;border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center}
 .admin-layout{max-width:960px;margin:0 auto;padding:2rem 1.5rem}
 .admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
 .admin-header h2{font-family:'DM Serif Display',serif;font-size:1.6rem}
@@ -139,16 +138,11 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
 .empty h3{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink2);margin-bottom:0.4rem}
 .empty p{font-size:0.88rem}
 .pw-modal{max-width:380px}
-/* Loading overlay */
 .loading-overlay{position:fixed;inset:0;background:var(--bg);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;transition:opacity 0.4s}
 .loading-overlay.hidden{opacity:0;pointer-events:none}
 .spinner{width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-size:0.9rem;color:var(--ink2)}
-/* Setup banner */
-.setup-banner{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:1rem 1.25rem;margin:1rem;font-size:0.85rem;color:#664d03;line-height:1.6;display:none}
-.setup-banner strong{display:block;margin-bottom:4px;font-size:0.9rem}
-.setup-banner code{background:rgba(0,0,0,0.08);padding:1px 6px;border-radius:4px;font-family:monospace;font-size:0.82rem}
 @media(max-width:600px){
   .hero h1{font-size:2rem}.hero-stats{gap:1rem}
   .form-row{grid-template-columns:1fr}.detail-meta-card{grid-template-columns:1fr}
@@ -158,16 +152,9 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
 </head>
 <body>
 
-<!-- LOADING OVERLAY -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
   <div class="loading-text">Loading CultureWiki…</div>
-</div>
-
-<!-- SETUP BANNER (shown if API keys not configured) -->
-<div class="setup-banner" id="setupBanner">
-  <strong>⚙️ Setup required — Admin only</strong>
-  JSONBin is not configured yet. Open <code>index.html</code> in a text editor, find the <code>JSONBIN CONFIG</code> section near the top of the &lt;script&gt; tag, and paste in your <code>MASTER_KEY</code> and <code>BIN_ID</code>. See the comments in the code for step-by-step instructions.
 </div>
 
 <nav class="nav">
@@ -179,7 +166,6 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
   </div>
 </nav>
 
-<!-- HOME -->
 <div class="page active" id="page-home">
   <div class="hero">
     <div class="hero-inner">
@@ -231,7 +217,6 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
   </div>
 </div>
 
-<!-- DETAIL -->
 <div class="page" id="page-detail">
   <div class="detail-page">
     <button class="back-link" id="detailBackBtn" onclick="showPage('home')">← Back to all entries</button>
@@ -251,7 +236,6 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
   </div>
 </div>
 
-<!-- ADMIN -->
 <div class="page" id="page-admin">
   <div class="admin-layout">
     <div class="admin-header">
@@ -262,16 +246,12 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
       </div>
     </div>
     <div class="tabs">
-      <button class="tab active" onclick="switchAdminTab('pending',this)">
-        Pending <span id="pendingCount" style="background:var(--accent);color:#fff;border-radius:10px;padding:1px 7px;font-size:0.72rem;margin-left:4px"></span>
-      </button>
+      <button class="tab active" onclick="switchAdminTab('pending',this)">Pending <span id="pendingCount" style="background:var(--accent);color:#fff;border-radius:10px;padding:1px 7px;font-size:0.72rem;margin-left:4px"></span></button>
       <button class="tab" onclick="switchAdminTab('published',this)">Published</button>
-      <button class="tab" onclick="switchAdminTab('access',this)">
-        Access requests <span id="accessCount" style="background:var(--gold);color:#fff;border-radius:10px;padding:1px 7px;font-size:0.72rem;margin-left:4px"></span>
-      </button>
+      <button class="tab" onclick="switchAdminTab('access',this)">Access requests <span id="accessCount" style="background:var(--gold);color:#fff;border-radius:10px;padding:1px 7px;font-size:0.72rem;margin-left:4px"></span></button>
     </div>
     <div class="admin-tab-panel active" id="tab-pending">
-      <p style="font-size:0.82rem;color:var(--ink2);margin-bottom:1rem;">Student submissions waiting for your review. Approve to publish live on the site — visible to all devices immediately.</p>
+      <p style="font-size:0.82rem;color:var(--ink2);margin-bottom:1rem;">Student submissions waiting for your review. Approve to publish live on all devices immediately.</p>
       <div id="pendingList"></div>
       <div class="empty" id="pendingEmpty" style="display:none"><div class="empty-icon">✅</div><h3>All clear!</h3><p>No entries awaiting review.</p></div>
     </div>
@@ -313,12 +293,8 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
       All entries are checked for originality. Copying text from external sources without acknowledgement is plagiarism and will result in removal of access and referral to school management.
     </div>
     <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Full name</label>
-        <input class="form-input" id="reqName" placeholder="Your full name">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Year level</label>
+      <div class="form-group"><label class="form-label">Full name</label><input class="form-input" id="reqName" placeholder="Your full name"></div>
+      <div class="form-group"><label class="form-label">Year level</label>
         <select class="form-select" id="reqYear">
           <option value="">Select year...</option>
           <option>Year 7</option><option>Year 8</option><option>Year 9</option>
@@ -326,22 +302,13 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
         </select>
       </div>
     </div>
-    <div class="form-group">
-      <label class="form-label">School email</label>
-      <input class="form-input" id="reqEmail" type="email" placeholder="yourname@school.edu.au">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Religion / culture you want to write about</label>
-      <input class="form-input" id="reqCulture" placeholder="e.g. Islam, Hinduism, Buddhism...">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Why do you want to contribute?</label>
-      <textarea class="form-textarea" id="reqReason" placeholder="Tell us a little about yourself and why this matters to you..."></textarea>
-    </div>
+    <div class="form-group"><label class="form-label">School email</label><input class="form-input" id="reqEmail" type="email" placeholder="yourname@school.edu.au"></div>
+    <div class="form-group"><label class="form-label">Religion / culture you want to write about</label><input class="form-input" id="reqCulture" placeholder="e.g. Islam, Hinduism, Buddhism..."></div>
+    <div class="form-group"><label class="form-label">Why do you want to contribute?</label><textarea class="form-textarea" id="reqReason" placeholder="Tell us a little about yourself and why this matters to you..."></textarea></div>
     <div class="form-group">
       <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;font-size:0.85rem;color:var(--ink2)">
         <input type="checkbox" id="reqAgree" style="margin-top:3px;flex-shrink:0">
-        I understand the plagiarism policy and agree to write original content. I acknowledge that violations will have consequences.
+        I understand the plagiarism policy and agree to write original content.
       </label>
     </div>
     <div class="form-actions">
@@ -358,7 +325,7 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
     <p class="modal-sub">Your entry goes to admin for review before appearing on the site.</p>
     <div class="warn-box warn-orange">
       <strong>📋 Originality reminder</strong>
-      Write entirely in your own words. Do not copy from Wikipedia, books, or other websites. All submissions are plagiarism-checked. Violations result in consequences as per school policy.
+      Write entirely in your own words. Do not copy from Wikipedia or other websites.
     </div>
     <div style="display:flex;gap:0;margin-bottom:1.25rem;border:1px solid var(--border2);border-radius:7px;overflow:hidden">
       <button id="toggleBuiltin" onclick="setFormMode('builtin')" style="flex:1;padding:8px;border:none;background:var(--ink);color:#fff;font-size:0.82rem;font-weight:500;cursor:pointer">Write entry here</button>
@@ -366,12 +333,8 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
     </div>
     <div id="builtinForm">
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Your name</label>
-          <input class="form-input" id="entName" placeholder="Full name">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Year level</label>
+        <div class="form-group"><label class="form-label">Your name</label><input class="form-input" id="entName" placeholder="Full name"></div>
+        <div class="form-group"><label class="form-label">Year level</label>
           <select class="form-select" id="entYear">
             <option>Year 7</option><option>Year 8</option><option>Year 9</option>
             <option>Year 10</option><option>Year 11</option><option>Year 12</option>
@@ -379,12 +342,8 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Religion / culture</label>
-          <input class="form-input" id="entReligion" placeholder="e.g. Islam, Hinduism...">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Category</label>
+        <div class="form-group"><label class="form-label">Religion / culture</label><input class="form-input" id="entReligion" placeholder="e.g. Islam, Hinduism..."></div>
+        <div class="form-group"><label class="form-label">Category</label>
           <select class="form-select" id="entCategory">
             <option value="Religion">Religion — beliefs &amp; practices</option>
             <option value="Food">Food</option>
@@ -395,23 +354,10 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
           </select>
         </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Entry title</label>
-        <input class="form-input" id="entTitle" placeholder="e.g. Ramadan, Diwali, Bar Mitzvah...">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Short description (shown in preview)</label>
-        <input class="form-input" id="entDesc" placeholder="One sentence summary">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Full entry (in your own words)</label>
-        <textarea class="form-textarea" id="entBody" style="min-height:120px" placeholder="Write your entry here. Explain what this is, why it matters, and what other students should understand..."></textarea>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Tags (comma separated)</label>
-        <input class="form-input" id="entTags" placeholder="e.g. prayer, fasting, community">
-        <div class="form-note">Add 2–4 keywords that describe this entry.</div>
-      </div>
+      <div class="form-group"><label class="form-label">Entry title</label><input class="form-input" id="entTitle" placeholder="e.g. Ramadan, Diwali, Bar Mitzvah..."></div>
+      <div class="form-group"><label class="form-label">Short description</label><input class="form-input" id="entDesc" placeholder="One sentence summary"></div>
+      <div class="form-group"><label class="form-label">Full entry (in your own words)</label><textarea class="form-textarea" id="entBody" style="min-height:120px" placeholder="Write your entry here..."></textarea></div>
+      <div class="form-group"><label class="form-label">Tags (comma separated)</label><input class="form-input" id="entTags" placeholder="e.g. prayer, fasting, community"></div>
       <div class="form-group">
         <label class="form-label">Image (optional)</label>
         <div class="img-upload-zone" id="uploadZone">
@@ -423,357 +369,239 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
           </div>
           <div id="uploadPreviewWrap" style="display:none">
             <img class="img-preview" id="entImagePreview" src="" alt="Preview">
-            <button class="img-preview-remove" onclick="removeImage(event)" title="Remove image">✕</button>
+            <button class="img-preview-remove" onclick="removeImage(event)">✕</button>
           </div>
         </div>
-        <div class="form-note">The image will appear at the top of your entry page.</div>
       </div>
       <div class="form-actions">
         <button class="btn btn-outline" onclick="closeModal('submitEntryModal')">Cancel</button>
-        <button class="btn btn-accent" onclick="submitEntry()">Submit for review →</button>
+        <button class="btn btn-accent" id="submitBtn" onclick="submitEntry()">Submit for review →</button>
       </div>
     </div>
     <div id="gformEmbed" style="display:none">
-      <div class="warn-box warn-gold" style="margin-bottom:0.75rem">
-        <strong>ℹ Using the Google Form</strong>
-        Submissions via Google Form go to the admin's Google Sheet. Admin will manually add approved entries to the wiki.
-      </div>
       <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeShsg5OYlcpzvwZZhb3m8vnoNsBDUD92K84aLiDfOv2yDauA/viewform?embedded=true"
-        style="width:100%;height:560px;border:none;border-radius:8px;background:var(--bg)"
-        title="Submit a cultural wiki entry via Google Form">Loading form…</iframe>
+        style="width:100%;height:560px;border:none;border-radius:8px" title="Submit entry">Loading…</iframe>
     </div>
   </div>
 </div>
 
-<!-- FLOATING SUBMIT -->
 <div style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:300">
   <button class="btn btn-accent" onclick="openSubmitEntry()" style="box-shadow:0 4px 18px rgba(200,90,42,0.4);padding:11px 22px;font-size:0.9rem">+ Submit entry</button>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-// =============================================================
-//  JSONBIN CONFIG
-//  Follow these 4 steps to set up your cloud database:
-//
-//  STEP 1: Go to https://jsonbin.io and create a free account
-//
-//  STEP 2: After logging in, click "API Keys" in the top menu.
-//          Copy your "Secret Key" (starts with $2b$...) and
-//          paste it below as MASTER_KEY.
-//
-//  STEP 3: Click "Create Bin" and paste this as the content:
-//          {"entries":[],"pending":[],"access":[]}
-//          Give it the name "culturewiki" and click Create.
-//
-//  STEP 4: Copy the Bin ID from the URL (the long string after
-//          /b/ — e.g. 6650a1234b123456789abcde) and paste it
-//          below as BIN_ID.
-//
-//  Once both values are set, commit index.html to GitHub.
-//  All changes will instantly sync across every device!
-// =============================================================
-const MASTER_KEY = '$2a$10$MXDYFEUySgOWylZe0GcoVO1yevehvCe.pfsCOtMx3h7RTmiX8Xb.2';
-const BIN_ID     = '6a220e5df5f4af5e29baf946';
-const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-
-// =============================================================
-//  ADMIN PASSWORD — change this to something only you know
-// =============================================================
+// ================================================================
+//  CONFIG — GitHub API as database (works perfectly on GitHub Pages)
+// ================================================================
 const ADMIN_PASSWORD = 'wiki2025';
+const GITHUB_TOKEN   = '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';
+const GITHUB_REPO    = 'nee0002/McKinnon-Secondary-s-Cultural-Dictionary';
+const DATA_FILE      = 'data.json';
+const API_BASE       = 'https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + DATA_FILE;
 
-// =============================================================
-//  SEED DATA — loaded into JSONBin the very first time
-// =============================================================
-const SEED = {
-  entries: [
-    {id:1,title:'Ramadan',religion:'Islam',category:'Celebrations',desc:'The holy month of fasting observed by Muslims worldwide.',body:`Ramadan is the ninth month of the Islamic lunar calendar and is considered the holiest month for Muslims. During this time, those who are physically able fast from dawn (Fajr) to sunset (Maghrib) every day, refraining from food, drink, and other physical needs.\n\nThe fast is broken each evening with a meal called Iftar, which often begins with dates and water, following the tradition of the Prophet Muhammad. A pre-dawn meal called Suhoor is eaten before the fast begins each morning.\n\nBeyond the physical fast, Ramadan is a time of increased prayer, reflection, and community. It ends with the celebration of Eid al-Fitr — a joyful festival marking the breaking of the fast.`,tags:['fasting','prayer','community','eid'],author:'Amira Hassan',year:'Year 10',date:'June 2025',status:'published',image:''},
-    {id:2,title:'Diwali — Festival of Lights',religion:'Hinduism',category:'Celebrations',desc:'A five-day festival marked by lights, family, and the triumph of good over evil.',body:`Diwali, also known as Deepavali, is one of the most widely celebrated festivals in the world. The word comes from the Sanskrit "Deepavali," meaning "row of lights." It is celebrated over five days, with the main celebrations on the third night when families light thousands of small oil lamps called diyas.\n\nFamilies clean and decorate their homes, create colourful rangoli patterns at the entrance, burst fireworks, and share sweets and gifts with neighbours and loved ones.\n\nDiwali holds different meanings across communities: for Hindus it marks Lord Rama's return; for Sikhs it marks the release of Guru Hargobind Ji; for Jains it celebrates the nirvana of Lord Mahavira.`,tags:['lights','diyas','rangoli','fireworks'],author:'Priya Sharma',year:'Year 9',date:'May 2025',status:'published',image:''},
-    {id:3,title:'Shabbat',religion:'Judaism',category:'Customs',desc:'The Jewish day of rest observed every week from Friday sundown to Saturday night.',body:`Shabbat is the Jewish day of rest, observed every week from Friday evening at sundown until Saturday night when three stars appear in the sky.\n\nShabbat begins with the lighting of two candles by the woman of the household. A special Friday night dinner follows, starting with blessings over challah bread and wine. Families gather, sing Shabbat songs, and share a festive meal.\n\nDuring Shabbat, observant Jewish people refrain from 39 categories of work. Instead, the day is spent attending synagogue services, studying Torah, and spending time with family. Shabbat is seen as a gift — a weekly sanctuary of rest.`,tags:['rest','prayer','candles','challah','synagogue'],author:'Daniel Cohen',year:'Year 11',date:'Apr 2025',status:'published',image:''},
-    {id:4,title:'The Five Pillars of Islam',religion:'Islam',category:'Religion',desc:"The five core acts of worship that form the foundation of a Muslim's faith.",body:`The Five Pillars of Islam are the five fundamental acts of worship every Muslim is expected to fulfil.\n\n1. Shahada — The declaration that "There is no god but Allah, and Muhammad is His messenger."\n\n2. Salah — Prayer five times daily facing Mecca: dawn, midday, afternoon, sunset, and night.\n\n3. Zakat — Giving 2.5% of savings annually to those in need.\n\n4. Sawm — Fasting during Ramadan from sunrise to sunset.\n\n5. Hajj — A pilgrimage to Mecca at least once in a lifetime for those who are able.`,tags:['prayer','fasting','charity','pilgrimage','faith'],author:'Yusuf Al-Rashid',year:'Year 12',date:'Mar 2025',status:'published',image:''},
-    {id:5,title:'Lunar New Year',religion:'Buddhism / Chinese culture',category:'Celebrations',desc:'The most important festival in Chinese culture and many East Asian traditions.',body:`Lunar New Year is celebrated by over a billion people across China and Chinese communities worldwide, as well as Vietnam (Tết), Korea (Seollal), and other East Asian cultures.\n\nThe celebration lasts 15 days, beginning on the first day of the lunar calendar and ending with the Lantern Festival. Each year is represented by one of 12 animals in the Chinese zodiac.\n\nTraditions include family reunion dinners, eating foods that symbolise luck, and giving red envelopes (hongbao) filled with money to children. Homes are decorated in red. Fireworks and dragon dances welcome the new year.`,tags:['family','red envelopes','zodiac','dragon','prosperity'],author:'Mei Lin Chen',year:'Year 8',date:'Feb 2025',status:'published',image:''}
-  ],
-  pending: [
-    {id:101,title:'The Holy Trinity',religion:'Christianity',category:'Religion',desc:"The Christian doctrine of one God in three persons: Father, Son and Holy Spirit.",body:`The Trinity is one of the central doctrines of Christianity. It teaches that God exists as three distinct persons — the Father, the Son (Jesus Christ), and the Holy Spirit — who are each fully God yet are one God.\n\nThis doctrine is affirmed throughout the New Testament and was formally articulated in the Nicene Creed (325 AD), a foundational statement of Christian belief across denominations.`,tags:['God','Jesus','Holy Spirit','doctrine'],author:'Grace Okonkwo',year:'Year 9',date:'June 2025',status:'pending',image:''}
-  ],
-  access: [
-    {id:201,name:'Tariq Mahmoud',year:'Year 10',email:'tariq.m@school.edu.au',culture:'Islam',reason:"I want to share accurate information about my faith because I've seen misconceptions at school.",date:'June 2025'}
-  ]
-};
-
-// =============================================================
+// ================================================================
 //  CATEGORY HELPERS
-// =============================================================
-const CAT_COLOR = {Religion:'#b8922a',Food:'#c85a2a',Customs:'#4a6741',Celebrations:'#2a4a8a',Clothing:'#7a3a8a',Language:'#8a4a2a'};
-const CAT_BG    = {Religion:'#f5e6c0',Food:'#fde8d8',Customs:'#d8e8d0',Celebrations:'#d0daf5',Clothing:'#ecd8f5',Language:'#f5dac8'};
-const CAT_TEXT  = {Religion:'#6a4a10',Food:'#7a2e0e',Customs:'#2a4a22',Celebrations:'#1a2e5a',Clothing:'#4a1a5a',Language:'#4a2010'};
-const CAT_CLASS = {Religion:'cat-religion',Food:'cat-food',Customs:'cat-customs',Celebrations:'cat-celebrations',Clothing:'cat-clothing',Language:'cat-language'};
-const REL_COLORS = ['#b8922a','#c85a2a','#4a6741','#2a4a8a','#7a3a8a','#8a4a2a','#3a7a8a','#6a3a2a'];
+// ================================================================
+const CAT_COLOR={Religion:'#b8922a',Food:'#c85a2a',Customs:'#4a6741',Celebrations:'#2a4a8a',Clothing:'#7a3a8a',Language:'#8a4a2a'};
+const CAT_BG={Religion:'#f5e6c0',Food:'#fde8d8',Customs:'#d8e8d0',Celebrations:'#d0daf5',Clothing:'#ecd8f5',Language:'#f5dac8'};
+const CAT_TEXT={Religion:'#6a4a10',Food:'#7a2e0e',Customs:'#2a4a22',Celebrations:'#1a2e5a',Clothing:'#4a1a5a',Language:'#4a2010'};
+const CAT_CLASS={Religion:'cat-religion',Food:'cat-food',Customs:'cat-customs',Celebrations:'cat-celebrations',Clothing:'cat-clothing',Language:'cat-language'};
+const REL_COLORS=['#b8922a','#c85a2a','#4a6741','#2a4a8a','#7a3a8a','#8a4a2a','#3a7a8a','#6a3a2a'];
 
-// =============================================================
+// ================================================================
 //  STATE
-// =============================================================
-let entries = [], pendingEntries = [], accessRequests = [];
-let isAdmin = false, currentFilter = 'All', currentReligionFilter = 'All';
-let pendingImageData = '';
-let isConfigured = false;
+// ================================================================
+let entries=[],pendingEntries=[],accessRequests=[];
+let isAdmin=false,currentFilter='All',currentReligionFilter='All';
+let pendingImageData='';
+let fileSha=''; // GitHub requires the file SHA to update it
 
-// =============================================================
-//  CHECK CONFIG
-// =============================================================
-function checkConfig() { return MASTER_KEY.length > 10 && BIN_ID.length > 10; }
-
-// =============================================================
-//  JSONBIN API — single source of truth for ALL devices
-// =============================================================
-async function loadData(isAdminRefresh = false) {
-  if (!checkConfig()) {
-    // Not configured — fall back to seed data for preview
-    
-    entries = JSON.parse(JSON.stringify(SEED.entries));
-    pendingEntries = JSON.parse(JSON.stringify(SEED.pending));
-    accessRequests = JSON.parse(JSON.stringify(SEED.access));
-    hideLoader();
-    refreshUI();
-    if (isAdminRefresh) renderAdminPanel();
-    return;
-  }
-  isConfigured = true;
+// ================================================================
+//  GITHUB API — reads and writes data.json in your repo
+//  Works perfectly from GitHub Pages — no CORS issues
+// ================================================================
+async function loadData(isAdminRefresh=false) {
   try {
-    const res = await fetch(JSONBIN_URL + '/latest', {
-      headers: { 'X-Master-Key': MASTER_KEY }
+    // Add cache-busting so we always get the latest version
+    const res = await fetch(API_BASE + '?t=' + Date.now(), {
+      headers: {
+        'Authorization': 'token ' + GITHUB_TOKEN,
+        'Accept': 'application/vnd.github.v3+json'
+      }
     });
-    if (!res.ok) throw new Error('Fetch failed: ' + res.status);
-    const json = await res.json();
-    const data = json.record;
-    // Only seed on very first run — check for a seeded flag, NOT entries length
-    // This prevents resetting when admin deletes entries
-    if (!data.seeded) {
-      const seedPayload = Object.assign({}, SEED, { seeded: true });
-      await saveData(seedPayload);
-      entries        = JSON.parse(JSON.stringify(SEED.entries));
-      pendingEntries = JSON.parse(JSON.stringify(SEED.pending));
-      accessRequests = JSON.parse(JSON.stringify(SEED.access));
-    } else {
-      // Normal load — always trust what is in the database
-      entries        = data.entries || [];
-      pendingEntries = data.pending || [];
-      accessRequests = data.access  || [];
-    }
-  } catch (e) {
-    showToast('⚠ Could not reach database. Check your internet connection.');
-    console.error('JSONBin load error:', e);
+    if (!res.ok) throw new Error('GitHub fetch failed: ' + res.status);
+    const file = await res.json();
+    fileSha = file.sha; // Save SHA for later updates
+    const decoded = JSON.parse(atob(file.content.replace(/\n/g,'')));
+    entries        = decoded.entries || [];
+    pendingEntries = decoded.pending || [];
+    accessRequests = decoded.access  || [];
+  } catch(e) {
+    console.error('Load error:', e);
+    showToast('Could not load data. Please refresh the page.');
   }
   hideLoader();
   refreshUI();
-  if (isAdminRefresh) renderAdminPanel();
+  if(isAdminRefresh) renderAdminPanel();
 }
 
-async function saveData(override) {
-  if (!checkConfig()) return; // Don't try to save if not configured
-  const payload = override || { seeded: true, entries, pending: pendingEntries, access: accessRequests };
+async function saveData() {
   try {
-    const res = await fetch(JSONBIN_URL, {
+    const data = { entries, pending: pendingEntries, access: accessRequests };
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+    const res = await fetch(API_BASE, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
-        'X-Master-Key': MASTER_KEY
+        'Authorization': 'token ' + GITHUB_TOKEN,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({
+        message: 'Update wiki data',
+        content: encoded,
+        sha: fileSha
+      })
     });
-    if (!res.ok) throw new Error('Save failed: ' + res.status);
-  } catch (e) {
-    showToast('⚠ Could not save changes. Check your internet connection.');
-    console.error('JSONBin save error:', e);
-    throw e; // Re-throw so callers can handle
+    if (!res.ok) throw new Error('GitHub save failed: ' + res.status);
+    const result = await res.json();
+    fileSha = result.content.sha; // Update SHA after save
+  } catch(e) {
+    console.error('Save error:', e);
+    showToast('Could not save. Please try again.');
+    throw e;
   }
 }
 
 function hideLoader() {
-  const overlay = document.getElementById('loadingOverlay');
-  overlay.classList.add('hidden');
-  setTimeout(() => overlay.style.display = 'none', 400);
+  const o=document.getElementById('loadingOverlay');
+  o.classList.add('hidden');
+  setTimeout(()=>o.style.display='none',400);
 }
+function refreshUI(){renderStats();renderSidebar();filterEntries();}
 
-function refreshUI() {
-  renderStats();
-  renderSidebar();
-  filterEntries();
-}
-
-// =============================================================
+// ================================================================
 //  UTILITY
-// =============================================================
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3200);
-}
-function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-function overlayClose(e, id) { if (e.target === e.currentTarget) closeModal(id); }
-function escHtml(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function showPage(p) {
-  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
-  document.getElementById('page-' + p).classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-function scrollToWiki() { document.getElementById('wikiTop').scrollIntoView({ behavior: 'smooth' }); }
+// ================================================================
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
+function closeModal(id){document.getElementById(id).style.display='none';}
+function overlayClose(e,id){if(e.target===e.currentTarget)closeModal(id);}
+function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function showPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function scrollToWiki(){document.getElementById('wikiTop').scrollIntoView({behavior:'smooth'});}
 
-// =============================================================
-//  STATS
-// =============================================================
-function renderStats() {
-  const pub = entries.filter(e => e.status === 'published');
-  document.getElementById('stat-entries').textContent = pub.length;
-  document.getElementById('stat-religions').textContent = [...new Set(pub.map(e => e.religion))].length;
-  document.getElementById('stat-contributors').textContent = [...new Set(pub.map(e => e.author))].length;
+// ================================================================
+//  STATS + SIDEBAR
+// ================================================================
+function renderStats(){
+  const pub=entries.filter(e=>e.status==='published');
+  document.getElementById('stat-entries').textContent=pub.length;
+  document.getElementById('stat-religions').textContent=[...new Set(pub.map(e=>e.religion))].length;
+  document.getElementById('stat-contributors').textContent=[...new Set(pub.map(e=>e.author))].length;
 }
-
-// =============================================================
-//  SIDEBAR
-// =============================================================
-function renderSidebar() {
-  const pub = entries.filter(e => e.status === 'published');
-  const religions = [...new Set(pub.map(e => e.religion))];
-  const sb = document.getElementById('religionSidebar');
-  let html = `<button class="sidebar-link ${currentReligionFilter==='All'?'active':''}" onclick="setSidebarFilter('All',this)">
-    <span class="dot" style="background:#888"></span>All religions
-    <span class="sidebar-count">${pub.length}</span></button>`;
-  religions.forEach((r, i) => {
-    const count = pub.filter(e => e.religion === r).length;
-    const col = REL_COLORS[i % REL_COLORS.length];
-    const safe = r.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-    html += `<button class="sidebar-link ${currentReligionFilter===r?'active':''}" onclick="setSidebarFilter('${safe}',this)">
-      <span class="dot" style="background:${col}"></span>${escHtml(r)}
-      <span class="sidebar-count">${count}</span></button>`;
+function renderSidebar(){
+  const pub=entries.filter(e=>e.status==='published');
+  const religions=[...new Set(pub.map(e=>e.religion))];
+  const sb=document.getElementById('religionSidebar');
+  let html=`<button class="sidebar-link ${currentReligionFilter==='All'?'active':''}" onclick="setSidebarFilter('All',this)"><span class="dot" style="background:#888"></span>All religions<span class="sidebar-count">${pub.length}</span></button>`;
+  religions.forEach((r,i)=>{
+    const count=pub.filter(e=>e.religion===r).length;
+    const col=REL_COLORS[i%REL_COLORS.length];
+    const safe=r.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    html+=`<button class="sidebar-link ${currentReligionFilter===r?'active':''}" onclick="setSidebarFilter('${safe}',this)"><span class="dot" style="background:${col}"></span>${escHtml(r)}<span class="sidebar-count">${count}</span></button>`;
   });
-  sb.innerHTML = html;
+  sb.innerHTML=html;
 }
-
-function setSidebarFilter(val, el) {
-  currentReligionFilter = val; currentFilter = 'All';
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+function setSidebarFilter(val,el){
+  currentReligionFilter=val;currentFilter='All';
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   document.querySelector('.filter-btn').classList.add('active');
-  document.getElementById('searchBox').value = '';
-  renderSidebar(); filterEntries();
+  document.getElementById('searchBox').value='';
+  renderSidebar();filterEntries();
+}
+function setFilter(val,el){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');currentFilter=val;currentReligionFilter='All';
+  renderSidebar();filterEntries();
 }
 
-function setFilter(val, el) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  currentFilter = val; currentReligionFilter = 'All';
-  renderSidebar(); filterEntries();
-}
-
-// =============================================================
-//  GRID
-// =============================================================
-function filterEntries() {
-  const q = document.getElementById('searchBox').value.toLowerCase();
-  const pub = entries.filter(e => e.status === 'published');
-  const filtered = pub.filter(e => {
-    const matchQ = !q || (e.title+e.religion+e.desc+(e.tags||[]).join('')).toLowerCase().includes(q);
-    const matchCat = currentFilter === 'All' || e.category === currentFilter;
-    const matchRel = currentReligionFilter === 'All' || e.religion === currentReligionFilter;
-    return matchQ && matchCat && matchRel;
+// ================================================================
+//  GRID + DETAIL
+// ================================================================
+function filterEntries(){
+  const q=document.getElementById('searchBox').value.toLowerCase();
+  const pub=entries.filter(e=>e.status==='published');
+  const filtered=pub.filter(e=>{
+    const matchQ=!q||(e.title+e.religion+e.desc+(e.tags||[]).join('')).toLowerCase().includes(q);
+    const matchCat=currentFilter==='All'||e.category===currentFilter;
+    const matchRel=currentReligionFilter==='All'||e.religion===currentReligionFilter;
+    return matchQ&&matchCat&&matchRel;
   });
   renderGrid(filtered);
 }
-
-function renderGrid(list) {
-  const grid = document.getElementById('wikiGrid');
-  const empty = document.getElementById('wikiEmpty');
-  if (!list) list = entries.filter(e => e.status === 'published');
-  if (list.length === 0) { grid.innerHTML = ''; empty.style.display = ''; return; }
-  empty.style.display = 'none';
-  grid.innerHTML = list.map(e => `
+function renderGrid(list){
+  const grid=document.getElementById('wikiGrid'),empty=document.getElementById('wikiEmpty');
+  if(!list)list=entries.filter(e=>e.status==='published');
+  if(list.length===0){grid.innerHTML='';empty.style.display='';return;}
+  empty.style.display='none';
+  grid.innerHTML=list.map(e=>`
     <div class="entry-card ${CAT_CLASS[e.category]||'cat-religion'}" onclick="showEntry(${e.id})">
-      ${e.image ? `<img class="entry-thumb" src="${e.image}" alt="${escHtml(e.title)}">` : ''}
+      ${e.image?`<img class="entry-thumb" src="${e.image}" alt="${escHtml(e.title)}">`:''}
       <div class="entry-header">
         <div class="entry-title">${escHtml(e.title)}</div>
         <span class="entry-badge badge-pill" style="background:${CAT_BG[e.category]||'#f5e6c0'};color:${CAT_TEXT[e.category]||'#6a4a10'}">${escHtml(e.category)}</span>
       </div>
       <div class="entry-rel">${escHtml(e.religion)}</div>
       <div class="entry-desc">${escHtml(e.desc)}</div>
-      <div class="entry-meta">
-        <span>✍ ${escHtml(e.author)}</span><span>· ${escHtml(e.year)}</span><span>· ${escHtml(e.date)}</span>
-      </div>
+      <div class="entry-meta"><span>✍ ${escHtml(e.author)}</span><span>· ${escHtml(e.year)}</span><span>· ${escHtml(e.date)}</span></div>
     </div>`).join('');
 }
-
-function showEntry(id) {
-  const e = entries.find(x => x.id === id);
-  if (!e) return;
-  _populateDetail(e, false);
-  showPage('detail');
+function showEntry(id){const e=entries.find(x=>x.id===id);if(!e)return;_populateDetail(e,false);showPage('detail');}
+function _populateDetail(e,isPending){
+  document.getElementById('detailBar').style.background=CAT_COLOR[e.category]||'#b8922a';
+  document.getElementById('detailRel').textContent=e.religion+(isPending?'  [PENDING]':'');
+  document.getElementById('detailTitle').textContent=e.title;
+  document.getElementById('detailSub').textContent=e.desc;
+  document.getElementById('detailTags').innerHTML=(e.tags||[]).map(t=>`<span class="detail-tag">${escHtml(t)}</span>`).join('');
+  const imgEl=document.getElementById('detailImg');
+  if(e.image){imgEl.src=e.image;imgEl.style.display='block';}else{imgEl.style.display='none';imgEl.src='';}
+  document.getElementById('detailBody').innerHTML=(e.body||'').split('\n\n').map(p=>`<p>${escHtml(p)}</p>`).join('');
+  document.getElementById('metaAuthor').textContent=e.author;
+  document.getElementById('metaYear').textContent=e.year;
+  document.getElementById('metaCat').textContent=e.category;
+  document.getElementById('metaDate').textContent=isPending?'Pending review':e.date;
+  document.getElementById('detailBackBtn').onclick=isPending?()=>showPage('admin'):()=>showPage('home');
 }
 
-function _populateDetail(e, isPending) {
-  document.getElementById('detailBar').style.background = CAT_COLOR[e.category] || '#b8922a';
-  document.getElementById('detailRel').textContent = e.religion + (isPending ? '  [PENDING — not yet published]' : '');
-  document.getElementById('detailTitle').textContent = e.title;
-  document.getElementById('detailSub').textContent = e.desc;
-  document.getElementById('detailTags').innerHTML = (e.tags||[]).map(t => `<span class="detail-tag">${escHtml(t)}</span>`).join('');
-  const imgEl = document.getElementById('detailImg');
-  if (e.image) { imgEl.src = e.image; imgEl.alt = e.title; imgEl.style.display = 'block'; }
-  else { imgEl.style.display = 'none'; imgEl.src = ''; }
-  document.getElementById('detailBody').innerHTML = (e.body||'').split('\n\n').map(p => `<p>${escHtml(p)}</p>`).join('');
-  document.getElementById('metaAuthor').textContent = e.author;
-  document.getElementById('metaYear').textContent   = e.year;
-  document.getElementById('metaCat').textContent    = e.category;
-  document.getElementById('metaDate').textContent   = isPending ? 'Pending review' : e.date;
-  document.getElementById('detailBackBtn').onclick  = isPending ? () => showPage('admin') : () => showPage('home');
-}
-
-// =============================================================
+// ================================================================
 //  ADMIN AUTH
-// =============================================================
-function openAdminLogin() {
-  document.getElementById('adminPwInput').value = '';
-  document.getElementById('adminPwError').style.display = 'none';
-  document.getElementById('adminLoginModal').style.display = 'flex';
-  setTimeout(() => document.getElementById('adminPwInput').focus(), 100);
+// ================================================================
+function openAdminLogin(){document.getElementById('adminPwInput').value='';document.getElementById('adminPwError').style.display='none';document.getElementById('adminLoginModal').style.display='flex';setTimeout(()=>document.getElementById('adminPwInput').focus(),100);}
+function checkAdminPw(){
+  if(document.getElementById('adminPwInput').value===ADMIN_PASSWORD){isAdmin=true;closeModal('adminLoginModal');renderAdminPanel();showPage('admin');}
+  else{document.getElementById('adminPwError').style.display='block';}
+}
+function logoutAdmin(){isAdmin=false;showPage('home');}
+function switchAdminTab(tab,el){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');
+  document.querySelectorAll('.admin-tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
 }
 
-function checkAdminPw() {
-  if (document.getElementById('adminPwInput').value === ADMIN_PASSWORD) {
-    isAdmin = true;
-    closeModal('adminLoginModal');
-    renderAdminPanel();
-    showPage('admin');
-  } else {
-    document.getElementById('adminPwError').style.display = 'block';
-  }
-}
-
-function logoutAdmin() { isAdmin = false; showPage('home'); }
-
-function switchAdminTab(tab, el) {
-  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  document.querySelectorAll('.admin-tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-}
-
-// =============================================================
+// ================================================================
 //  ADMIN RENDER
-// =============================================================
-function renderAdminPanel() {
-  // PENDING
-  document.getElementById('pendingCount').textContent = pendingEntries.length || '';
-  const pl = document.getElementById('pendingList');
-  const pe = document.getElementById('pendingEmpty');
-  if (pendingEntries.length === 0) { pl.innerHTML = ''; pe.style.display = ''; }
-  else {
-    pe.style.display = 'none';
-    pl.innerHTML = pendingEntries.map(e => `
+// ================================================================
+function renderAdminPanel(){
+  document.getElementById('pendingCount').textContent=pendingEntries.length||'';
+  const pl=document.getElementById('pendingList'),pe=document.getElementById('pendingEmpty');
+  if(pendingEntries.length===0){pl.innerHTML='';pe.style.display='';}
+  else{
+    pe.style.display='none';
+    pl.innerHTML=pendingEntries.map(e=>`
       <div class="pcard" id="pcard-${e.id}">
-        ${e.image ? `<img class="pcard-img" src="${e.image}" alt="${escHtml(e.title)}">` : ''}
+        ${e.image?`<img class="pcard-img" src="${e.image}" alt="${escHtml(e.title)}">`:''}
         <h4>${escHtml(e.title)} <span class="pending-badge">● Pending</span></h4>
-        <div class="pmeta">${escHtml(e.religion)} · ${escHtml(e.category)} · ${escHtml(e.author)} (${escHtml(e.year)}) · Submitted ${escHtml(e.date)}</div>
+        <div class="pmeta">${escHtml(e.religion)} · ${escHtml(e.category)} · ${escHtml(e.author)} (${escHtml(e.year)}) · ${escHtml(e.date)}</div>
         <div class="pbody">${escHtml((e.body||'').substring(0,240))}…</div>
         <div class="pcard-actions">
           <button class="btn btn-sage" onclick="approveEntry(${e.id})">✓ Approve &amp; publish live</button>
@@ -782,41 +610,35 @@ function renderAdminPanel() {
         </div>
       </div>`).join('');
   }
-
-  // PUBLISHED
-  const pub = entries.filter(e => e.status === 'published');
-  const pubList = document.getElementById('publishedList');
-  const pubEmpty = document.getElementById('publishedEmpty');
-  if (pub.length === 0) { pubList.innerHTML = ''; pubEmpty.style.display = ''; }
-  else {
-    pubEmpty.style.display = 'none';
-    pubList.innerHTML = pub.map(e => `
+  const pub=entries.filter(e=>e.status==='published');
+  const pubList=document.getElementById('publishedList'),pubEmpty=document.getElementById('publishedEmpty');
+  if(pub.length===0){pubList.innerHTML='';pubEmpty.style.display='';}
+  else{
+    pubEmpty.style.display='none';
+    pubList.innerHTML=pub.map(e=>`
       <div class="pcard">
         <h4>${escHtml(e.title)} <span class="live-badge">● Live</span></h4>
         <div class="pmeta">${escHtml(e.religion)} · ${escHtml(e.category)} · ${escHtml(e.author)} · ${escHtml(e.date)}</div>
         <div class="pbody">${escHtml(e.desc)}</div>
         <div class="pcard-actions">
-          <button class="btn btn-outline" onclick="previewPublished(${e.id})">View entry</button>
+          <button class="btn btn-outline" onclick="previewPublished(${e.id})">View</button>
           <button class="btn btn-danger" onclick="removeEntry(${e.id})">Remove from site</button>
         </div>
       </div>`).join('');
   }
-
-  // ACCESS REQUESTS
-  document.getElementById('accessCount').textContent = accessRequests.length || '';
-  const al = document.getElementById('accessList');
-  const ae = document.getElementById('accessEmpty');
-  if (accessRequests.length === 0) { al.innerHTML = ''; ae.style.display = ''; }
-  else {
-    ae.style.display = 'none';
-    al.innerHTML = accessRequests.map(r => `
+  document.getElementById('accessCount').textContent=accessRequests.length||'';
+  const al=document.getElementById('accessList'),ae=document.getElementById('accessEmpty');
+  if(accessRequests.length===0){al.innerHTML='';ae.style.display='';}
+  else{
+    ae.style.display='none';
+    al.innerHTML=accessRequests.map(r=>`
       <div class="acard" id="acard-${r.id}">
         <div class="ainfo">
           <div class="aname">${escHtml(r.name)}</div>
           <div class="ameta">${escHtml(r.year)} · ${escHtml(r.email)}</div>
           <div class="ameta">Wants to write about: <strong>${escHtml(r.culture)}</strong></div>
-          <div class="ameta" style="margin-top:4px;font-style:italic">"${escHtml(r.reason)}"</div>
-          <div class="ameta" style="margin-top:2px">Submitted: ${escHtml(r.date)}</div>
+          <div class="ameta" style="font-style:italic">"${escHtml(r.reason)}"</div>
+          <div class="ameta">Submitted: ${escHtml(r.date)}</div>
         </div>
         <div style="display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap;align-self:flex-start">
           <button class="btn btn-sage" onclick="approveAccess(${r.id})">Approve</button>
@@ -826,188 +648,132 @@ function renderAdminPanel() {
   }
 }
 
-// =============================================================
-//  ADMIN ACTIONS — each saves to JSONBin so ALL devices update
-// =============================================================
-async function approveEntry(id) {
-  const idx = pendingEntries.findIndex(e => e.id === id);
-  if (idx === -1) return;
-  const btn = event.target;
-  btn.textContent = 'Publishing…'; btn.disabled = true;
-  try {
-    const e = pendingEntries.splice(idx, 1)[0];
-    e.status = 'published';
-    e.date = new Date().toLocaleString('default', { month:'long', year:'numeric' });
-    entries.push(e);
-    await saveData(); // saves to cloud — all devices see it immediately
-    renderAdminPanel(); refreshUI();
-    showToast('✅ Entry is now LIVE on all devices!');
-  } catch(err) {
-    btn.textContent = '✓ Approve & publish live'; btn.disabled = false;
-  }
+// ================================================================
+//  ADMIN ACTIONS — all save to GitHub instantly, syncs all devices
+// ================================================================
+async function approveEntry(id){
+  const idx=pendingEntries.findIndex(e=>e.id===id);if(idx===-1)return;
+  const btn=event.target;btn.textContent='Publishing…';btn.disabled=true;
+  const e=pendingEntries.splice(idx,1)[0];
+  e.status='published';e.date=new Date().toLocaleString('default',{month:'long',year:'numeric'});
+  entries.push(e);
+  try{await saveData();renderAdminPanel();refreshUI();showToast('✅ Entry is now LIVE on all devices!');}
+  catch(err){pendingEntries.push(e);entries.pop();renderAdminPanel();btn.textContent='✓ Approve & publish live';btn.disabled=false;}
+}
+async function rejectEntry(id){
+  pendingEntries=pendingEntries.filter(e=>e.id!==id);
+  try{await saveData();renderAdminPanel();showToast('Entry rejected.');}catch(err){}
+}
+function previewPending(id){const e=pendingEntries.find(x=>x.id===id);if(!e)return;_populateDetail(e,true);showPage('detail');}
+function previewPublished(id){const e=entries.find(x=>x.id===id);if(!e)return;_populateDetail(e,false);document.getElementById('detailBackBtn').onclick=()=>showPage('admin');showPage('detail');}
+async function removeEntry(id){
+  if(!confirm('Remove this entry? This cannot be undone.'))return;
+  entries=entries.filter(e=>e.id!==id);
+  try{await saveData();renderAdminPanel();refreshUI();showToast('Entry removed from all devices.');}catch(err){}
+}
+async function approveAccess(id){
+  accessRequests=accessRequests.filter(r=>r.id!==id);
+  try{await saveData();renderAdminPanel();showToast('✅ Access approved!');}catch(err){}
+}
+async function denyAccess(id){
+  accessRequests=accessRequests.filter(r=>r.id!==id);
+  try{await saveData();renderAdminPanel();showToast('Access denied.');}catch(err){}
 }
 
-async function rejectEntry(id) {
-  pendingEntries = pendingEntries.filter(e => e.id !== id);
-  try {
-    await saveData();
-    renderAdminPanel();
-    showToast('Entry rejected and removed.');
-  } catch(err) {}
-}
-
-function previewPending(id) {
-  const e = pendingEntries.find(x => x.id === id);
-  if (!e) return;
-  _populateDetail(e, true);
-  showPage('detail');
-}
-
-function previewPublished(id) {
-  const e = entries.find(x => x.id === id);
-  if (!e) return;
-  _populateDetail(e, false);
-  document.getElementById('detailBackBtn').onclick = () => showPage('admin');
-  showPage('detail');
-}
-
-async function removeEntry(id) {
-  if (!confirm('Remove this entry from the site? This cannot be undone.')) return;
-  entries = entries.filter(e => e.id !== id);
-  try {
-    await saveData(); // saves to cloud — removed on all devices immediately
-    renderAdminPanel(); refreshUI();
-    showToast('Entry removed from the website on all devices.');
-  } catch(err) {}
-}
-
-async function approveAccess(id) {
-  accessRequests = accessRequests.filter(r => r.id !== id);
-  try {
-    await saveData();
-    renderAdminPanel();
-    showToast('✅ Access approved!');
-  } catch(err) {}
-}
-
-async function denyAccess(id) {
-  accessRequests = accessRequests.filter(r => r.id !== id);
-  try {
-    await saveData();
-    renderAdminPanel();
-    showToast('Access request denied.');
-  } catch(err) {}
-}
-
-// =============================================================
+// ================================================================
 //  REQUEST ACCESS
-// =============================================================
-function openRequestAccess() { document.getElementById('requestAccessModal').style.display = 'flex'; }
-
-async function submitAccessRequest() {
-  const name    = document.getElementById('reqName').value.trim();
-  const year    = document.getElementById('reqYear').value;
-  const email   = document.getElementById('reqEmail').value.trim();
-  const culture = document.getElementById('reqCulture').value.trim();
-  const reason  = document.getElementById('reqReason').value.trim();
-  const agree   = document.getElementById('reqAgree').checked;
-  if (!name||!year||!email||!culture||!reason) { showToast('Please fill in all fields.'); return; }
-  if (!agree) { showToast('Please agree to the plagiarism policy.'); return; }
-  accessRequests.push({ id:Date.now(), name, year, email, culture, reason, date:new Date().toLocaleString('default',{month:'long',year:'numeric'}) });
-  try {
+// ================================================================
+function openRequestAccess(){document.getElementById('requestAccessModal').style.display='flex';}
+async function submitAccessRequest(){
+  const name=document.getElementById('reqName').value.trim();
+  const year=document.getElementById('reqYear').value;
+  const email=document.getElementById('reqEmail').value.trim();
+  const culture=document.getElementById('reqCulture').value.trim();
+  const reason=document.getElementById('reqReason').value.trim();
+  const agree=document.getElementById('reqAgree').checked;
+  if(!name||!year||!email||!culture||!reason){showToast('Please fill in all fields.');return;}
+  if(!agree){showToast('Please agree to the plagiarism policy.');return;}
+  accessRequests.push({id:Date.now(),name,year,email,culture,reason,date:new Date().toLocaleString('default',{month:'long',year:'numeric'})});
+  try{
     await saveData();
     closeModal('requestAccessModal');
-    ['reqName','reqEmail','reqCulture','reqReason'].forEach(id => document.getElementById(id).value='');
-    document.getElementById('reqYear').selectedIndex = 0;
-    document.getElementById('reqAgree').checked = false;
-    showToast('✅ Request submitted! Your year manager will follow up.');
-  } catch(err) { showToast('⚠ Could not submit — please try again.'); }
+    ['reqName','reqEmail','reqCulture','reqReason'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('reqYear').selectedIndex=0;document.getElementById('reqAgree').checked=false;
+    showToast('✅ Request submitted!');
+  }catch(err){showToast('Could not submit. Please try again.');}
 }
 
-// =============================================================
+// ================================================================
 //  SUBMIT ENTRY
-// =============================================================
-function openSubmitEntry() { setFormMode('builtin'); document.getElementById('submitEntryModal').style.display='flex'; }
-
-function setFormMode(mode) {
-  const btnB = document.getElementById('toggleBuiltin'), btnG = document.getElementById('toggleGform');
-  if (mode==='builtin') {
-    document.getElementById('builtinForm').style.display=''; document.getElementById('gformEmbed').style.display='none';
-    btnB.style.background='var(--ink)'; btnB.style.color='#fff';
-    btnG.style.background='var(--surface2)'; btnG.style.color='var(--ink2)';
-  } else {
-    document.getElementById('builtinForm').style.display='none'; document.getElementById('gformEmbed').style.display='';
-    btnG.style.background='var(--ink)'; btnG.style.color='#fff';
-    btnB.style.background='var(--surface2)'; btnB.style.color='var(--ink2)';
+// ================================================================
+function openSubmitEntry(){setFormMode('builtin');document.getElementById('submitEntryModal').style.display='flex';}
+function setFormMode(mode){
+  const btnB=document.getElementById('toggleBuiltin'),btnG=document.getElementById('toggleGform');
+  if(mode==='builtin'){
+    document.getElementById('builtinForm').style.display='';document.getElementById('gformEmbed').style.display='none';
+    btnB.style.background='var(--ink)';btnB.style.color='#fff';btnG.style.background='var(--surface2)';btnG.style.color='var(--ink2)';
+  }else{
+    document.getElementById('builtinForm').style.display='none';document.getElementById('gformEmbed').style.display='';
+    btnG.style.background='var(--ink)';btnG.style.color='#fff';btnB.style.background='var(--surface2)';btnB.style.color='var(--ink2)';
   }
 }
-
-async function submitEntry() {
-  const name     = document.getElementById('entName').value.trim();
-  const year     = document.getElementById('entYear').value;
-  const religion = document.getElementById('entReligion').value.trim();
-  const category = document.getElementById('entCategory').value;
-  const title    = document.getElementById('entTitle').value.trim();
-  const desc     = document.getElementById('entDesc').value.trim();
-  const body     = document.getElementById('entBody').value.trim();
-  const tags     = document.getElementById('entTags').value.split(',').map(t=>t.trim()).filter(Boolean);
-  if (!name||!religion||!title||!desc||!body) { showToast('Please fill in all required fields.'); return; }
-  const submitBtn = document.querySelector('#builtinForm .btn-accent');
-  submitBtn.textContent = 'Submitting…'; submitBtn.disabled = true;
-  pendingEntries.push({ id:Date.now(), title, religion, category, desc, body, tags, author:name, year, date:new Date().toLocaleString('default',{month:'long',year:'numeric'}), status:'pending', image:pendingImageData });
-  try {
+async function submitEntry(){
+  const name=document.getElementById('entName').value.trim();
+  const year=document.getElementById('entYear').value;
+  const religion=document.getElementById('entReligion').value.trim();
+  const category=document.getElementById('entCategory').value;
+  const title=document.getElementById('entTitle').value.trim();
+  const desc=document.getElementById('entDesc').value.trim();
+  const body=document.getElementById('entBody').value.trim();
+  const tags=document.getElementById('entTags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  if(!name||!religion||!title||!desc||!body){showToast('Please fill in all required fields.');return;}
+  const btn=document.getElementById('submitBtn');btn.textContent='Submitting…';btn.disabled=true;
+  pendingEntries.push({id:Date.now(),title,religion,category,desc,body,tags,author:name,year,date:new Date().toLocaleString('default',{month:'long',year:'numeric'}),status:'pending',image:pendingImageData});
+  try{
     await saveData();
     closeModal('submitEntryModal');
     ['entName','entReligion','entTitle','entDesc','entBody','entTags'].forEach(id=>document.getElementById(id).value='');
-    removeImage(null);
-    showToast('✅ Submitted! Waiting for admin review.');
-    if (isAdmin) renderAdminPanel();
-  } catch(err) {
-    showToast('⚠ Could not submit — please try again.');
-    pendingEntries.pop();
-  } finally {
-    submitBtn.textContent = 'Submit for review →'; submitBtn.disabled = false;
-  }
+    removeImage(null);showToast('✅ Submitted! Waiting for admin review.');
+    if(isAdmin)renderAdminPanel();
+  }catch(err){pendingEntries.pop();showToast('Could not submit. Please try again.');}
+  finally{btn.textContent='Submit for review →';btn.disabled=false;}
 }
 
-// =============================================================
+// ================================================================
 //  IMAGE UPLOAD
-// =============================================================
-function handleImageUpload(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  if (file.size > 2*1024*1024) { showToast('Image too large. Please use an image under 2 MB.'); event.target.value=''; return; }
-  const reader = new FileReader();
-  reader.onload = e => {
-    pendingImageData = e.target.result;
-    document.getElementById('entImagePreview').src = pendingImageData;
-    document.getElementById('uploadPrompt').style.display = 'none';
-    document.getElementById('uploadPreviewWrap').style.display = 'block';
+// ================================================================
+function handleImageUpload(event){
+  const file=event.target.files[0];if(!file)return;
+  if(file.size>2*1024*1024){showToast('Image too large. Max 2 MB.');event.target.value='';return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    pendingImageData=e.target.result;
+    document.getElementById('entImagePreview').src=pendingImageData;
+    document.getElementById('uploadPrompt').style.display='none';
+    document.getElementById('uploadPreviewWrap').style.display='block';
   };
   reader.readAsDataURL(file);
 }
-
-function removeImage(event) {
-  if (event) event.stopPropagation();
-  pendingImageData = '';
-  document.getElementById('entImagePreview').src = '';
-  document.getElementById('entImageFile').value = '';
-  document.getElementById('uploadPrompt').style.display = '';
-  document.getElementById('uploadPreviewWrap').style.display = 'none';
+function removeImage(event){
+  if(event)event.stopPropagation();
+  pendingImageData='';
+  document.getElementById('entImagePreview').src='';
+  document.getElementById('entImageFile').value='';
+  document.getElementById('uploadPrompt').style.display='';
+  document.getElementById('uploadPreviewWrap').style.display='none';
 }
-
-const uploadZone = document.getElementById('uploadZone');
-uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
-uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
-uploadZone.addEventListener('drop', e => {
-  e.preventDefault(); uploadZone.classList.remove('dragover');
-  const file = e.dataTransfer.files[0];
-  if (file && file.type.startsWith('image/')) handleImageUpload({ target:{ files: e.dataTransfer.files } });
+const uploadZone=document.getElementById('uploadZone');
+uploadZone.addEventListener('dragover',e=>{e.preventDefault();uploadZone.classList.add('dragover');});
+uploadZone.addEventListener('dragleave',()=>uploadZone.classList.remove('dragover'));
+uploadZone.addEventListener('drop',e=>{
+  e.preventDefault();uploadZone.classList.remove('dragover');
+  const file=e.dataTransfer.files[0];
+  if(file&&file.type.startsWith('image/'))handleImageUpload({target:{files:e.dataTransfer.files}});
 });
 
-// =============================================================
+// ================================================================
 //  BOOT
-// =============================================================
+// ================================================================
 loadData();
 </script>
 </body>
