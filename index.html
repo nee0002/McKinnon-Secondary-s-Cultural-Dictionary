@@ -522,8 +522,7 @@ let isConfigured = false;
 // =============================================================
 //  CHECK CONFIG
 // =============================================================
-function checkConfig() {
-  return MASTER_KEY !== '$2a$10$MXDYFEUySgOWylZe0GcoVO1yevehvCe.pfsCOtMx3h7RTmiX8Xb.2' && BIN_ID !== '6a220e5df5f4af5e29baf946';
+function checkConfig() { return MASTER_KEY.length > 10 && BIN_ID.length > 10; }
 }
 
 // =============================================================
@@ -549,16 +548,19 @@ async function loadData(isAdminRefresh = false) {
     if (!res.ok) throw new Error('Fetch failed: ' + res.status);
     const json = await res.json();
     const data = json.record;
-    // First run — bin is empty, seed it
-    if (!data.entries || data.entries.length === 0) {
-      await saveData(SEED);
-      entries = JSON.parse(JSON.stringify(SEED.entries));
+    // Only seed on very first run — check for a seeded flag, NOT entries length
+    // This prevents resetting when admin deletes entries
+    if (!data.seeded) {
+      const seedPayload = Object.assign({}, SEED, { seeded: true });
+      await saveData(seedPayload);
+      entries        = JSON.parse(JSON.stringify(SEED.entries));
       pendingEntries = JSON.parse(JSON.stringify(SEED.pending));
       accessRequests = JSON.parse(JSON.stringify(SEED.access));
     } else {
-      entries        = data.entries        || [];
-      pendingEntries = data.pending        || [];
-      accessRequests = data.access         || [];
+      // Normal load — always trust what is in the database
+      entries        = data.entries || [];
+      pendingEntries = data.pending || [];
+      accessRequests = data.access  || [];
     }
   } catch (e) {
     showToast('⚠ Could not reach database. Check your internet connection.');
@@ -571,7 +573,7 @@ async function loadData(isAdminRefresh = false) {
 
 async function saveData(override) {
   if (!checkConfig()) return; // Don't try to save if not configured
-  const payload = override || { entries, pending: pendingEntries, access: accessRequests };
+  const payload = override || { seeded: true, entries, pending: pendingEntries, access: accessRequests };
   try {
     const res = await fetch(JSONBIN_URL, {
       method: 'PUT',
