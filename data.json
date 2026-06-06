@@ -58,26 +58,6 @@
       "date": "Mar 2025",
       "status": "published",
       "image": ""
-    },
-    {
-      "id": 5,
-      "title": "Lunar New Year",
-      "religion": "Buddhism / Chinese culture",
-      "category": "Celebrations",
-      "desc": "The most important festival in Chinese culture and many East Asian traditions.",
-      "body": "Lunar New Year is celebrated by over a billion people across China and Chinese communities worldwide.\n\nThe celebration lasts 15 days. Each year is represented by one of 12 animals in the Chinese zodiac.\n\nTraditions include family reunion dinners, eating foods that symbolise luck, and giving red envelopes filled with money to children. Fireworks and dragon dances welcome the new year.",
-      "tags": [
-        "family",
-        "red envelopes",
-        "zodiac",
-        "dragon",
-        "prosperity"
-      ],
-      "author": "Mei Lin Chen",
-      "year": "Year 8",
-      "date": "Feb 2025",
-      "status": "published",
-      "image": ""
     }
   ],
   "pending": [],
