@@ -502,7 +502,7 @@ function hideLoader() {
     setTimeout(()=>o.style.display='none',400);
   }
 }
-function refreshUI()){renderStats();renderSidebar();filterEntries();}
+function refreshUI(){renderStats();renderSidebar();filterEntries();}
 
 // ================================================================
 //  UTILITY
@@ -528,7 +528,7 @@ function renderSidebar(){
   const religions=[...new Set(pub.map(e=>e.religion))];
   const sb=document.getElementById('religionSidebar');
   let html=`<button class="sidebar-link ${currentReligionFilter==='All'?'active':''}" onclick="setSidebarFilter('All',this)"><span class="dot" style="background:#888"></span>All religions<span class="sidebar-count">${pub.length}</span></button>`;
-  religions.forEach((r,i)=>{
+  rel religions.forEach((r,i)=>{
     const count=pub.filter(e=>e.religion===r).length;
     const col=REL_COLORS[i%REL_COLORS.length];
     const safe=r.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
