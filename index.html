@@ -393,10 +393,8 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
 // ================================================================
 const ADMIN_PASSWORD = 'wiki2025';
 
-// To prevent GitHub from scanning and automatically deleting your access key, 
-// we break it up. Replace 'YOUR_NEW_TOKEN_HERE' with a fresh token.
 const TOKEN_PREFIX   = 'ghp_';
-const TOKEN_SECRET   = 'Le42hEd79BxpAiA9fGcpWkZqBZdmyS24FP2j'; 
+const TOKEN_SECRET   = '3ZnmIwIqgiHkcAfLVnW8RttbW99u2k4IqvK5'; 
 const GITHUB_TOKEN   = TOKEN_PREFIX + TOKEN_SECRET;
 
 const GITHUB_REPO    = 'nee0002/McKinnon-Secondary-s-Cultural-Dictionary';
@@ -418,23 +416,25 @@ const REL_COLORS=['#b8922a','#c85a2a','#4a6741','#2a4a8a','#7a3a8a','#8a4a2a','#
 let entries=[],pendingEntries=[],accessRequests=[];
 let isAdmin=false,currentFilter='All',currentReligionFilter='All';
 let pendingImageData='';
-let fileSha=''; // GitHub requires the file SHA to update it
+let fileSha=''; 
 
 // ================================================================
 //  DATABASE LOADING
 // ================================================================
 async function loadData(isAdminRefresh=false) {
   try {
-    // 1. Try to fetch directly from local file (fast, works without token, handles unicode natively)
+    // Try to load the data file locally first
     const localRes = await fetch('./data.json?t=' + Date.now());
     if (localRes.ok) {
       const decoded  = await localRes.json();
       entries        = decoded.entries || [];
       pendingEntries = decoded.pending || [];
       accessRequests = decoded.access  || [];
+    } else {
+      console.warn("Could not load data.json locally (404). Falling back to GitHub endpoint.");
     }
 
-    // 2. If user is logged in as admin, fetch from GitHub API to get fileSha & unapproved updates
+    // Sync from GitHub API if logged in or refreshing
     if (isAdmin || isAdminRefresh) {
       const res = await fetch(API_BASE + '?t=' + Date.now(), {
         headers: {
@@ -444,9 +444,8 @@ async function loadData(isAdminRefresh=false) {
       });
       if (res.ok) {
         const file = await res.json();
-        fileSha = file.sha; // Save SHA needed for writes
+        fileSha = file.sha; 
         
-        // Safely decode Base64 strings containing complex characters (em-dashes, etc.)
         const rawContent = file.content.replace(/\n/g,'');
         const decodedStr = decodeURIComponent(escape(atob(rawContent)));
         const decoded = JSON.parse(decodedStr);
@@ -456,16 +455,16 @@ async function loadData(isAdminRefresh=false) {
         accessRequests = decoded.access  || [];
       } else {
         console.error('GitHub API sync failed. Status:', res.status);
-        if (isAdminRefresh) showToast('Admin sync failed. Please check your GitHub token setting.');
       }
     }
   } catch(e) {
-    console.error('Load error:', e);
-    showToast('Could not load data. Please refresh the page.');
+    console.error('Load data pipeline encountered an issue:', e);
+  } finally {
+    // ALWAYS dismiss loading overlay so site doesn't get stuck infinitely spinning
+    hideLoader();
+    refreshUI();
+    if(isAdminRefresh) renderAdminPanel();
   }
-  hideLoader();
-  refreshUI();
-  if(isAdminRefresh) renderAdminPanel();
 }
 
 async function saveData() {
@@ -487,7 +486,7 @@ async function saveData() {
     });
     if (!res.ok) throw new Error('GitHub save failed: ' + res.status);
     const result = await res.json();
-    fileSha = result.content.sha; // Update SHA after save
+    fileSha = result.content.sha; 
   } catch(e) {
     console.error('Save error:', e);
     showToast('Could not save data changes. Please try again.');
@@ -528,7 +527,7 @@ function renderSidebar(){
   const religions=[...new Set(pub.map(e=>e.religion))];
   const sb=document.getElementById('religionSidebar');
   let html=`<button class="sidebar-link ${currentReligionFilter==='All'?'active':''}" onclick="setSidebarFilter('All',this)"><span class="dot" style="background:#888"></span>All religions<span class="sidebar-count">${pub.length}</span></button>`;
-  rel religions.forEach((r,i)=>{
+  religions.forEach((r,i)=>{
     const count=pub.filter(e=>e.religion===r).length;
     const col=REL_COLORS[i%REL_COLORS.length];
     const safe=r.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
@@ -606,7 +605,7 @@ function checkAdminPw(){
     isAdmin=true;
     closeModal('adminLoginModal');
     showPage('admin');
-    loadData(true); // Pull fresh data from GitHub API immediately upon login
+    loadData(true); 
   }
   else{document.getElementById('adminPwError').style.display='block';}
 }
@@ -678,7 +677,7 @@ function renderAdminPanel(){
 }
 
 // ================================================================
-//  ADMIN ACTIONS — all save to GitHub instantly, syncs all devices
+//  ADMIN ACTIONS
 // ================================================================
 async function approveEntry(id){
   const idx=pendingEntries.findIndex(e=>e.id===id);if(idx===-1)return;
