@@ -378,27 +378,9 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
 <script>
 // =============================================================
 //  JSONBIN CONFIG
-//  Follow these 4 steps to set up your cloud database:
-//
-//  STEP 1: Go to https://jsonbin.io and create a free account
-//
-//  STEP 2: After logging in, click "API Keys" in the top menu.
-//          Copy your "Secret Key" (starts with $2b$...) and
-//          paste it below as MASTER_KEY.
-//
-//  STEP 3: Click "Create Bin" and paste this as the content:
-//          {"entries":[],"pending":[],"access":[]}
-//          Give it the name "culturewiki" and click Create.
-//
-//  STEP 4: Copy the Bin ID from the URL (the long string after
-//          /b/ — e.g. 6650a1234b123456789abcde) and paste it
-//          below as BIN_ID.
-//
-//  Once both values are set, commit index.html to GitHub.
-//  All changes will instantly sync across every device!
 // =============================================================
 const MASTER_KEY = '$2a$10$MXDYFEUySgOWylZe0GcoVO1yevehvCe.pfsCOtMx3h7RTmiX8Xb.2';
-const BIN_ID     = '6a220e5df5f4af5e29baf946';
+const BIN_ID     = '6a226105da38895dfe8a923d'; // YOUR NEW BIN ID IS PLUGGED IN HERE
 const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
 // =============================================================
@@ -407,7 +389,8 @@ const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 const ADMIN_PASSWORD = 'wiki2025';
 
 // =============================================================
-//  SEED DATA — loaded into JSONBin the very first time
+//  SEED DATA — Everything here will be automatically uploaded 
+//  to your new Bin the first time the page loads!
 // =============================================================
 const SEED = {
   entries: [
@@ -457,8 +440,6 @@ function checkConfig() { return MASTER_KEY.length > 10 && BIN_ID.length > 10; }
 // =============================================================
 async function loadData(isAdminRefresh = false) {
   if (!checkConfig()) {
-    // Not configured — fall back to seed data for preview
-    
     entries = JSON.parse(JSON.stringify(SEED.entries));
     pendingEntries = JSON.parse(JSON.stringify(SEED.pending));
     accessRequests = JSON.parse(JSON.stringify(SEED.access));
@@ -475,8 +456,8 @@ async function loadData(isAdminRefresh = false) {
     if (!res.ok) throw new Error('Fetch failed: ' + res.status);
     const json = await res.json();
     const data = json.record;
-    // Only seed on very first run — check for a seeded flag, NOT entries length
-    // This prevents resetting when admin deletes entries
+    
+    // IF THE BIN HAS NEVER BEEN SEEDED, FORCE SEED ALL ENTRIES NOW
     if (!data.seeded) {
       const seedPayload = Object.assign({}, SEED, { seeded: true });
       await saveData(seedPayload);
