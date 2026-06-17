@@ -210,4 +210,361 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
 <div class="modal-overlay" id="requestAccessModal" style="display:none" onclick="overlayClose(event,'requestAccessModal')">
   <div class="modal">
     <h2>Request contributor access</h2>
-    <p class="modal-sub">Fill in this form and your year level manager will notify you
+    <p class="modal-sub">Fill in this form and your year level manager will notify you once approved.</p>
+    <div class="warn-box warn-gold">
+      <strong>⚠ Plagiarism policy</strong>
+      All entries are checked for originality. Copying text from external sources without acknowledgement is plagiarism and will result in removal of access and referral to school management.
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Full name</label>
+        <input class="form-input" id="reqName" placeholder="Your full name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Year level</label>
+        <select class="form-select" id="reqYear">
+          <option value="">Select year...</option>
+          <option>Year 7</option><option>Year 8</option><option>Year 9</option>
+          <option>Year 10</option><option>Year 11</option><option>Year 12</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">School email</label>
+      <input class="form-input" id="reqEmail" type="email" placeholder="yourname@school.edu.au">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Religion / culture you want to write about</label>
+      <input class="form-input" id="reqCulture" placeholder="e.g. Islam, Hinduism, Buddhism...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Why do you want to contribute?</label>
+      <textarea class="form-textarea" id="reqReason" placeholder="Tell us a little about yourself and why this matters to you..."></textarea>
+    </div>
+    <div class="form-group">
+      <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;font-size:0.85rem;color:var(--ink2)">
+        <input type="checkbox" id="reqAgree" style="margin-top:3px;flex-shrink:0">
+        I understand the plagiarism policy and agree to write original content. I acknowledge that violations will have consequences.
+      </label>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-outline" onclick="closeModal('requestAccessModal')">Cancel</button>
+      <button class="btn btn-sage" onclick="submitAccessRequest()">Submit request</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="submitEntryModal" style="display:none" onclick="overlayClose(event,'submitEntryModal')">
+  <div class="modal" style="max-width:600px">
+    <h2>Submit a new entry</h2>
+    <p class="modal-sub">Your entry goes to admin for review before appearing on the site.</p>
+    <div class="warn-box warn-orange">
+      <strong>📋 Originality reminder</strong>
+      Write entirely in your own words. Do not copy from Wikipedia, books, or other websites. All submissions are plagiarism-checked. Violations result in consequences as per school policy.
+    </div>
+    
+    <div id="gformEmbed">
+      <div class="warn-box warn-gold" style="margin-bottom:0.75rem">
+        <strong>ℹ Using the Google Form</strong>
+        Submissions via Google Form go to the admin's Google Sheet. Admin will manually add approved entries to the wiki.
+      </div>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeShsg5OYlcpzvwZZhb3m8vnoNsBDUD92K84aLiDfOv2yDauA/viewform?embedded=true"
+        style="width:100%;height:560px;border:none;border-radius:8px;background:var(--bg)"
+        title="Submit a cultural wiki entry via Google Form">Loading form…</iframe>
+    </div>
+
+    <div class="form-actions" style="margin-top:1.25rem">
+      <button class="btn btn-outline" onclick="closeModal('submitEntryModal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<div style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:300">
+  <button class="btn btn-accent" onclick="openSubmitEntry()" style="box-shadow:0 4px 18px rgba(200,90,42,0.4);padding:11px 22px;font-size:0.9rem">+ Submit entry</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// =============================================================
+//  JSONBIN CONFIG
+// =============================================================
+const MASTER_KEY = '$2a$10$MXDYFEUySgOWylZe0GcoVO1yevehvCe.pfsCOtMx3h7RTmiX8Xb.2';
+const BIN_ID     = '6a226105da38895dfe8a923d';
+const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+
+// =============================================================
+//  SEED DATA
+// =============================================================
+const SEED = {
+  entries: [
+    {id:1,title:'Ramadan',religion:'Islam',category:'Celebrations',desc:'The holy month of fasting observed by Muslims worldwide.',body:`Ramadan is the ninth month of the Islamic lunar calendar and is considered the holiest month for Muslims. During this time, those who are physically able fast from dawn (Fajr) to sunset (Maghrib) every day, refraining from food, drink, and other physical needs.\n\nThe fast is broken each evening with a meal called Iftar, which often begins with dates and water, following the tradition of the Prophet Muhammad. A pre-dawn meal called Suhoor is eaten before the fast begins each morning.\n\nBeyond the physical fast, Ramadan is a time of increased prayer, reflection, and community. It ends with the celebration of Eid al-Fitr — a joyful festival marking the breaking of the fast.`,tags:['fasting','prayer','community','eid'],author:'Reyan Fernando',year:'Year 9',date:'June 2025',status:'published',image:''},
+    {id:2,title:'Diwali — Festival of Lights',religion:'Hinduism',category:'Celebrations',desc:'A five-day festival marked by lights, family, and the triumph of good over evil.',body:`Diwali, also known as Deepavali, is one of the most widely celebrated festivals in the world. The word comes from the Sanskrit "Deepavali," meaning "row of lights." It is celebrated over five days, with the main celebrations on the third night when families light thousands of small oil lamps called diyas.\n\nFamilies clean and decorate their homes, create colourful rangoli patterns at the entrance, burst fireworks, and share sweets and gifts with neighbours and loved ones.\n\nDiwali holds different meanings across communities: for Hindus it marks Lord Rama's return; for Sikhs it marks the release of Guru Hargobind Ji; for Jains it celebrates the nirvana of Lord Mahavira.`,tags:['lights','diyas','rangoli','fireworks'],author:'Namish Neeli',year:'Year 9',date:'May 2025',status:'published',image:''},
+    {id:3,title:'Shabbat',religion:'Judaism',category:'Customs',desc:'The Jewish day of rest observed every week from Friday sundown to Saturday night.',body:`Shabbat is the Jewish day of rest, observed every week from Friday evening at sundown until Saturday night when three stars appear in the sky.\n\nShabbat begins with the lighting of two candles by the woman of the household. A special Friday night dinner follows, starting with blessings over challah bread and wine. Families gather, sing Shabbat songs, and share a festive meal.\n\nDuring Shabbat, observant Jewish people refrain from 39 categories of work. Instead, the day is spent attending synagogue services, studying Torah, and spending time with family. Shabbat is seen as a gift — a weekly sanctuary of rest.`,tags:['rest','prayer','candles','challah','synagogue'],author:'Arhan Yadav',year:'Year 9',date:'Apr 2025',status:'published',image:''},
+    {id:4,title:'The Five Pillars of Islam',religion:'Islam',category:'Religion',desc:"The five core acts of worship that form the foundation of a Muslim's faith.",body:`The Five Pillars of Islam are the five fundamental acts of worship every Muslim is expected to fulfil.\n\n1. Shahada — The declaration that "There is no god but Allah, and Muhammad is His messenger."\n\n2. Salah — Prayer five times daily facing Mecca: dawn, midday, afternoon, sunset, and night.\n\n3. Zakat — Giving 2.5% of savings annually to those in need.\n\n4. Sawm — Fasting during Ramadan from sunrise to sunset.\n\n5. Hajj — A pilgrimage to Mecca at least once in a lifetime for those who are able.`,tags:['prayer','fasting','charity','pilgrimage','faith'],author:'Reyan Fernando',year:'Year 9',date:'Mar 2025',status:'published',image:''},
+    {id:13,title:'Apokries (Carnival)',religion:'Greek culture',category:'Celebrations',desc:'A three-week carnival period before Lent filled with parades, parties, and traditions.',body:`Apokries, which literally means "abstaining from meat," is the Greek carnival season. It lasts for three weeks leading up to the Great Lent.\n\nDuring this time, people dress up in costumes, hold street parties, and attend parades. The most famous celebrations happen in cities like Patras, where giant floats and thousands of people fill the streets in vibrant festivities before the solemnity of the Lenten fasting period begins.`,tags:['costumes','parades','party','lent'],author:'Panagiotis Yfantis',year:'Year 9',date:'June 2026',status:'published',image:''},
+    {id:14,title:'Panigiria',religion:'Greek culture',category:'Customs',desc:'Traditional village festivals held in honor of a local saint or religious feast.',body:`Panigiria are traditional religious festivals held across Greek villages to celebrate a patron saint or a significant religious feast day.\n\nThese gatherings bring the whole community together. They often include church services in the morning, followed by long feasts with traditional music, dancing (like the syrtos or kalamatianos), and local food. It is a vital way for villagers to maintain their cultural roots and celebrate their heritage.`,tags:['village','saint','dance','music'],author:'Panagiotis Yfantis',year:'Year 9',date:'June 2026',status:'published',image:''},
+    {id:15,title:'Athens & Epidaurus Festival',religion:'Greek culture',category:'Celebrations',desc:'A world-renowned arts festival featuring ancient drama, music, and dance.',body:`The Athens and Epidaurus Festival is one of the most prestigious cultural events in Greece. It takes place annually and features performances ranging from ancient Greek tragedy and comedy to contemporary theater, opera, and classical music.\n\nThe most iconic venue for the festival is the Ancient Theatre of Epidaurus, a remarkably well-preserved structure from the 4th century BC, known for its incredible acoustics.`,tags:['theatre','arts','drama','epidaurus'],author:'Peter Strintzos',year:'Year 9',date:'June 2026',status:'published',image:''},
+    {id:16,title:'Name Days (Ostromastikes)',religion:'Greek culture',category:'Customs',desc:'A traditional celebration of the day dedicated to the saint after whom a person is named.',body:`In Greece, name days are often considered more important than birthdays. A name day is the feast day of the Christian saint or martyr after whom a person is named.\n\nOn this day, people often host open-house parties where friends and family visit to offer wishes, traditional sweets, and sometimes small gifts. It is a central part of Greek social and religious identity.`,tags:['saint','feast','social','tradition'],author:'Peter Strintzos',year:'Year 9',date:'June 2026',status:'published',image:''},
+    {id:17,title:'Easter',religion:'Christianity',category:'Celebrations',desc:'The most significant religious holiday in the Greek Orthodox calendar.',body:`Easter, or Pascha, is the highest and most important holiday in the Greek Orthodox Church, celebrating the resurrection of Jesus Christ.\n\nTraditions are deeply rooted and include the 40-day fast during Lent, Holy Week services, the solemn Good Friday candlelit procession, and the joyful "Christos Anesti" (Christ is Risen) midnight service on Saturday. Easter Sunday is then celebrated with a massive feast, typically involving roast lamb, red-dyed eggs, and tsoureki (sweet bread).`,tags:['resurrection','orthodox','lamb','fasting'],author:'Samarth Sharath',year:'Year 9',date:'June 2026',status:'published',image:''}
+  ],
+  pending: [],
+  access: [
+    {id:201,name:'Tariq Mahmoud',year:'Year 10',email:'tariq.m@school.edu.au',culture:'Islam',reason:"I want to share accurate information about my faith because I've seen misconceptions at school.",date:'June 2025'}
+  ]
+};
+
+// =============================================================
+//  CATEGORY HELPERS
+// =============================================================
+const CAT_COLOR = {Religion:'#b8922a',Food:'#c85a2a',Customs:'#4a6741',Celebrations:'#2a4a8a',Clothing:'#7a3a8a',Language:'#8a4a2a'};
+const CAT_BG    = {Religion:'#f5e6c0',Food:'#fde8d8',Customs:'#d8e8d0',Celebrations:'#d0daf5',Clothing:'#ecd8f5',Language:'#f5dac8'};
+const CAT_TEXT  = {Religion:'#6a4a10',Food:'#7a2e0e',Customs:'#2a4a22',Celebrations:'#1a2e5a',Clothing:'#4a1a5a',Language:'#4a2010'};
+const CAT_CLASS = {Religion:'cat-religion',Food:'cat-food',Customs:'cat-customs',Celebrations:'cat-celebrations',Clothing:'cat-clothing',Language:'cat-language'};
+const REL_COLORS = ['#b8922a','#c85a2a','#4a6741','#2a4a8a','#7a3a8a','#8a4a2a','#3a7a8a','#6a3a2a'];
+
+// =============================================================
+//  STATE
+// =============================================================
+let entries = [], pendingEntries = [], accessRequests = [];
+let currentFilter = 'All', currentReligionFilter = 'All';
+let isConfigured = false;
+
+// =============================================================
+//  CHECK CONFIG
+// =============================================================
+function checkConfig() { return MASTER_KEY.length > 10 && BIN_ID.length > 10; }
+
+// =============================================================
+//  JSONBIN API
+// =============================================================
+async function loadData() {
+  if (!checkConfig()) {
+    entries = JSON.parse(JSON.stringify(SEED.entries));
+    pendingEntries = JSON.parse(JSON.stringify(SEED.pending));
+    accessRequests = JSON.parse(JSON.stringify(SEED.access));
+    hideLoader();
+    refreshUI();
+    return;
+  }
+  isConfigured = true;
+  try {
+    const res = await fetch(JSONBIN_URL + '/latest', {
+      headers: { 'X-Master-Key': MASTER_KEY }
+    });
+    if (!res.ok) throw new Error('Fetch failed: ' + res.status);
+    const json = await res.json();
+    const data = json.record;
+    
+    // FORCE UPDATE FOR NEW ENTRIES
+    if (!data.v3_update) {
+      const updatedPayload = Object.assign({}, SEED, { v3_update: true });
+      await saveData(updatedPayload);
+      entries        = JSON.parse(JSON.stringify(SEED.entries));
+      pendingEntries = JSON.parse(JSON.stringify(SEED.pending));
+      accessRequests = JSON.parse(JSON.stringify(SEED.access));
+    } else {
+      entries        = data.entries || [];
+      pendingEntries = data.pending || [];
+      accessRequests = data.access  || [];
+    }
+  } catch (e) {
+    showToast('⚠ Could not reach database. Check your internet connection.');
+    console.error('JSONBin load error:', e);
+  }
+  hideLoader();
+  refreshUI();
+}
+
+async function saveData(override) {
+  if (!checkConfig()) return;
+  const payload = override || { v3_update: true, entries, pending: pendingEntries, access: accessRequests };
+  try {
+    const res = await fetch(JSONBIN_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': MASTER_KEY
+      },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error('Save failed: ' + res.status);
+  } catch (e) {
+    showToast('⚠ Could not save changes. Check your internet connection.');
+    console.error('JSONBin save error:', e);
+    throw e;
+  }
+}
+
+function hideLoader() {
+  const overlay = document.getElementById('loadingOverlay');
+  overlay.classList.add('hidden');
+  setTimeout(() => overlay.style.display = 'none', 400);
+}
+
+function refreshUI() {
+  renderStats();
+  renderSidebar();
+  filterEntries();
+}
+
+// =============================================================
+//  UTILITY
+// =============================================================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+function overlayClose(e, id) { if (e.target === e.currentTarget) closeModal(id); }
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function showPage(p) {
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+  document.getElementById('page-' + p).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function scrollToWiki() { document.getElementById('wikiTop').scrollIntoView({ behavior: 'smooth' }); }
+
+// =============================================================
+//  STATS
+// =============================================================
+function renderStats() {
+  const pub = entries.filter(e => e.status === 'published');
+  document.getElementById('stat-entries').textContent = pub.length;
+  document.getElementById('stat-religions').textContent = [...new Set(pub.map(e => e.religion))].length;
+  document.getElementById('stat-contributors').textContent = [...new Set(pub.map(e => e.author))].length;
+}
+
+// =============================================================
+//  SIDEBAR
+// =============================================================
+function renderSidebar() {
+  const pub = entries.filter(e => e.status === 'published');
+  const religions = [...new Set(pub.map(e => e.religion))];
+  const sb = document.getElementById('religionSidebar');
+  let html = `<button class="sidebar-link ${currentReligionFilter==='All'?'active':''}" onclick="setSidebarFilter('All',this)">
+    <span class="dot" style="background:#888"></span>All religions
+    <span class="sidebar-count">${pub.length}</span></button>`;
+  religions.forEach((r, i) => {
+    const count = pub.filter(e => e.religion === r).length;
+    const col = REL_COLORS[i % REL_COLORS.length];
+    const safe = r.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    html += `<button class="sidebar-link ${currentReligionFilter===r?'active':''}" onclick="setSidebarFilter('${safe}',this)">
+      <span class="dot" style="background:${col}"></span>${escHtml(r)}
+      <span class="sidebar-count">${count}</span></button>`;
+  });
+  sb.innerHTML = html;
+}
+
+function setSidebarFilter(val, el) {
+  currentReligionFilter = val; currentFilter = 'All';
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.filter-btn').classList.add('active');
+  document.getElementById('searchBox').value = '';
+  renderSidebar(); filterEntries();
+}
+
+function setFilter(val, el) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter = val; currentReligionFilter = 'All';
+  renderSidebar(); filterEntries();
+}
+
+// =============================================================
+//  GRID
+// =============================================================
+function filterEntries() {
+  const q = document.getElementById('searchBox').value.toLowerCase();
+  const pub = entries.filter(e => e.status === 'published');
+  const filtered = pub.filter(e => {
+    const matchQ = !q || (e.title+e.religion+e.desc+(e.tags||[]).join('')).toLowerCase().includes(q);
+    const matchCat = currentFilter === 'All' || e.category === currentFilter;
+    const matchRel = currentReligionFilter === 'All' || e.religion === currentReligionFilter;
+    return matchQ && matchCat && matchRel;
+  });
+  renderGrid(filtered);
+}
+
+function renderGrid(list) {
+  const grid = document.getElementById('wikiGrid');
+  const empty = document.getElementById('wikiEmpty');
+  if (!list) list = entries.filter(e => e.status === 'published');
+  if (list.length === 0) { grid.innerHTML = ''; empty.style.display = ''; return; }
+  empty.style.display = 'none';
+  grid.innerHTML = list.map(e => `
+    <div class="entry-card ${CAT_CLASS[e.category]||'cat-religion'}" onclick="showEntry(${e.id})">
+      ${e.image ? `<img class="entry-thumb" src="${e.image}" alt="${escHtml(e.title)}">` : ''}
+      <div class="entry-header">
+        <div class="entry-title">${escHtml(e.title)}</div>
+        <span class="entry-badge badge-pill" style="background:${CAT_BG[e.category]||'#f5e6c0'};color:${CAT_TEXT[e.category]||'#6a4a10'}">${escHtml(e.category)}</span>
+      </div>
+      <div class="entry-rel">${escHtml(e.religion)}</div>
+      <div class="entry-desc">${escHtml(e.desc)}</div>
+      <div class="entry-meta">
+        <span>✍ ${escHtml(e.author)}</span><span>· ${escHtml(e.year)}</span><span>· ${escHtml(e.date)}</span>
+      </div>
+    </div>`).join('');
+}
+
+function showEntry(id) {
+  const e = entries.find(x => x.id === id);
+  if (!e) return;
+  
+  document.getElementById('detailBar').style.background = CAT_COLOR[e.category] || '#b8922a';
+  document.getElementById('detailRel').textContent = e.religion;
+  document.getElementById('detailTitle').textContent = e.title;
+  document.getElementById('detailSub').textContent = e.desc;
+  document.getElementById('detailTags').innerHTML = (e.tags||[]).map(t => `<span class="detail-tag">${escHtml(t)}</span>`).join('');
+  const imgEl = document.getElementById('detailImg');
+  if (e.image) { imgEl.src = e.image; imgEl.alt = e.title; imgEl.style.display = 'block'; }
+  else { imgEl.style.display = 'none'; imgEl.src = ''; }
+  document.getElementById('detailBody').innerHTML = (e.body||'').split('\n\n').map(p => `<p>${escHtml(p)}</p>`).join('');
+  document.getElementById('metaAuthor').textContent = e.author;
+  document.getElementById('metaYear').textContent   = e.year;
+  document.getElementById('metaCat').textContent    = e.category;
+  document.getElementById('metaDate').textContent   = e.date;
+  
+  showPage('detail');
+}
+
+// =============================================================
+//  REQUEST ACCESS
+// =============================================================
+function openRequestAccess() { document.getElementById('requestAccessModal').style.display = 'flex'; }
+
+async function submitAccessRequest() {
+  const name    = document.getElementById('reqName').value.trim();
+  const year    = document.getElementById('reqYear').value;
+  const email   = document.getElementById('reqEmail').value.trim();
+  const culture = document.getElementById('reqCulture').value.trim();
+  const reason  = document.getElementById('reqReason').value.trim();
+  const agree   = document.getElementById('reqAgree').checked;
+  if (!name||!year||!email||!culture||!reason) { showToast('Please fill in all fields.'); return; }
+  if (!agree) { showToast('Please agree to the plagiarism policy.'); return; }
+  accessRequests.push({ id:Date.now(), name, year, email, culture, reason, date:new Date().toLocaleString('default',{month:'long',year:'numeric'}) });
+  try {
+    await saveData();
+    closeModal('requestAccessModal');
+    ['reqName','reqEmail','reqCulture','reqReason'].forEach(id => document.getElementById(id).value='');
+    document.getElementById('reqYear').selectedIndex = 0;
+    document.getElementById('reqAgree').checked = false;
+    showToast('✅ Request submitted! Your year manager will follow up.');
+  } catch(err) { showToast('⚠ Could not submit — please try again.'); }
+}
+
+// =============================================================
+//  SUBMIT ENTRY
+// =============================================================
+function openSubmitEntry() { document.getElementById('submitEntryModal').style.display='flex'; }
+
+// =============================================================
+//  BOOT
+// =============================================================
+loadData();
+</script>
+</body>
+</html>
