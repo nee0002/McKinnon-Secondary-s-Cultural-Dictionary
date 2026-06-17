@@ -98,57 +98,23 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent)}
 .form-textarea{resize:vertical;min-height:100px;line-height:1.6}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.form-note{font-size:0.78rem;color:var(--ink3);margin-top:4px;line-height:1.5}
 .form-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem}
 .warn-box{border-radius:8px;padding:0.9rem 1rem;margin-bottom:1rem;font-size:0.82rem;line-height:1.55}
 .warn-box strong{display:block;margin-bottom:3px;font-size:0.85rem}
 .warn-gold{background:var(--gold-light);border:1px solid #d4a840;color:#6a4a10}
 .warn-orange{background:#fff8f0;border:1px solid #f5d0a0;color:#7a4a10}
-.img-upload-zone{border:2px dashed var(--border2);border-radius:8px;padding:1.5rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--bg);position:relative}
-.img-upload-zone:hover,.img-upload-zone.dragover{border-color:var(--accent);background:#fff8f4}
-.img-upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.img-upload-icon{font-size:1.8rem;margin-bottom:0.4rem}
-.img-upload-label{font-size:0.85rem;color:var(--ink2);font-weight:500}
-.img-upload-hint{font-size:0.75rem;color:var(--ink3);margin-top:3px}
-.img-preview-wrap{position:relative;margin-top:0.75rem}
-.img-preview{width:100%;max-height:180px;object-fit:cover;border-radius:6px;display:block}
-.img-preview-remove{position:absolute;top:6px;right:6px;background:rgba(26,22,18,0.7);color:#fff;border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;transition:background 0.15s}
-.img-preview-remove:hover{background:var(--accent)}
-.admin-layout{max-width:960px;margin:0 auto;padding:2rem 1.5rem}
-.admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
-.admin-header h2{font-family:'DM Serif Display',serif;font-size:1.6rem}
-.tabs{display:flex;gap:4px;margin-bottom:1.25rem;background:var(--surface2);padding:4px;border-radius:8px;width:fit-content;flex-wrap:wrap}
-.tab{font-size:0.82rem;font-weight:500;padding:6px 16px;border-radius:5px;border:none;cursor:pointer;background:none;color:var(--ink2);transition:all 0.15s}
-.tab.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,0.08)}
-.admin-tab-panel{display:none}.admin-tab-panel.active{display:block}
-.pcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.15rem 1.3rem;margin-bottom:0.75rem}
-.pcard h4{font-family:'DM Serif Display',serif;font-size:1.05rem;margin-bottom:0.2rem}
-.pcard .pmeta{font-size:0.75rem;color:var(--ink3);margin-bottom:0.5rem}
-.pcard .pbody{font-size:0.88rem;color:var(--ink2);line-height:1.55;margin-bottom:0.75rem}
-.pcard-actions{display:flex;gap:8px;flex-wrap:wrap}
-.pcard-img{width:100%;max-height:160px;object-fit:cover;border-radius:6px;margin-bottom:0.75rem;display:block}
-.acard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.3rem;margin-bottom:0.75rem;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:0.75rem}
-.acard .ainfo{font-size:0.88rem}.acard .aname{font-weight:600;color:var(--ink)}
-.acard .ameta{font-size:0.78rem;color:var(--ink3);margin-top:2px}
-.live-badge{display:inline-block;background:#d8e8d0;color:#2a4a22;font-size:0.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle}
-.pending-badge{display:inline-block;background:#fde8d8;color:#7a2e0e;font-size:0.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle}
 .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:10px 22px;border-radius:25px;font-size:0.85rem;z-index:9999;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);white-space:nowrap;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .empty{text-align:center;padding:3rem 1rem;color:var(--ink3)}
 .empty-icon{font-size:2.5rem;margin-bottom:0.75rem}
 .empty h3{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink2);margin-bottom:0.4rem}
 .empty p{font-size:0.88rem}
-.pw-modal{max-width:380px}
 /* Loading overlay */
 .loading-overlay{position:fixed;inset:0;background:var(--bg);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;transition:opacity 0.4s}
 .loading-overlay.hidden{opacity:0;pointer-events:none}
 .spinner{width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-size:0.9rem;color:var(--ink2)}
-/* Setup banner */
-.setup-banner{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:1rem 1.25rem;margin:1rem;font-size:0.85rem;color:#664d03;line-height:1.6;display:none}
-.setup-banner strong{display:block;margin-bottom:4px;font-size:0.9rem}
-.setup-banner code{background:rgba(0,0,0,0.08);padding:1px 6px;border-radius:4px;font-family:monospace;font-size:0.82rem}
 @media(max-width:600px){
   .hero h1{font-size:2rem}.hero-stats{gap:1rem}
   .form-row{grid-template-columns:1fr}.detail-meta-card{grid-template-columns:1fr}
@@ -163,17 +129,11 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
   <div class="loading-text">Loading CultureWiki…</div>
 </div>
 
-<div class="setup-banner" id="setupBanner">
-  <strong>⚙️ Setup required — Admin only</strong>
-  JSONBin is not configured yet. Open <code>index.html</code> in a text editor, find the <code>JSONBIN CONFIG</code> section near the top of the &lt;script&gt; tag, and paste in your <code>MASTER_KEY</code> and <code>BIN_ID</code>. See the comments in the code for step-by-step instructions.
-</div>
-
 <nav class="nav">
   <div class="nav-logo" onclick="showPage('home')"><span class="dot"></span>CultureWiki</div>
   <div class="nav-actions">
     <button class="btn btn-ghost" onclick="showPage('home')">Home</button>
     <button class="btn btn-ghost" onclick="openRequestAccess()">Request Access</button>
-    <button class="btn btn-accent" onclick="openAdminLogin()">Admin</button>
   </div>
 </nav>
 
@@ -243,56 +203,6 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
       <div><div class="meta-label">Year level</div><div class="meta-val" id="metaYear"></div></div>
       <div><div class="meta-label">Category</div><div class="meta-val" id="metaCat"></div></div>
       <div><div class="meta-label">Published</div><div class="meta-val" id="metaDate"></div></div>
-    </div>
-  </div>
-</div>
-
-<div class="page" id="page-admin">
-  <div class="admin-layout">
-    <div class="admin-header">
-      <h2>Admin Panel</h2>
-      <div style="display:flex;gap:8px">
-        <button class="btn btn-outline" onclick="loadData(true)">🔄 Refresh</button>
-        <button class="btn btn-outline" onclick="logoutAdmin()">Log out</button>
-      </div>
-    </div>
-    <div class="tabs">
-      <button class="tab active" onclick="switchAdminTab('pending',this)">
-        Pending <span id="pendingCount" style="background:var(--accent);color:#fff;border-radius:10px;padding:1px 7px;font-size:0.72rem;margin-left:4px"></span>
-      </button>
-      <button class="tab" onclick="switchAdminTab('published',this)">Published</button>
-      <button class="tab" onclick="switchAdminTab('access',this)">
-        Access requests <span id="accessCount" style="background:var(--gold);color:#fff;border-radius:10px;padding:1px 7px;font-size:0.72rem;margin-left:4px"></span>
-      </button>
-    </div>
-    <div class="admin-tab-panel active" id="tab-pending">
-      <p style="font-size:0.82rem;color:var(--ink2);margin-bottom:1rem;">Student submissions waiting for your review. Approve to publish live on the site — visible to all devices immediately.</p>
-      <div id="pendingList"></div>
-      <div class="empty" id="pendingEmpty" style="display:none"><div class="empty-icon">✅</div><h3>All clear!</h3><p>No entries awaiting review.</p></div>
-    </div>
-    <div class="admin-tab-panel" id="tab-published">
-      <div id="publishedList"></div>
-      <div class="empty" id="publishedEmpty" style="display:none"><div class="empty-icon">📄</div><h3>No entries yet</h3><p>Approved entries appear here.</p></div>
-    </div>
-    <div class="admin-tab-panel" id="tab-access">
-      <div id="accessList"></div>
-      <div class="empty" id="accessEmpty" style="display:none"><div class="empty-icon">📭</div><h3>No requests</h3><p>No access requests pending.</p></div>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="adminLoginModal" style="display:none" onclick="overlayClose(event,'adminLoginModal')">
-  <div class="modal pw-modal">
-    <h2>Admin login</h2>
-    <p class="modal-sub">Enter the admin password to access the panel.</p>
-    <div class="form-group">
-      <label class="form-label">Password</label>
-      <input class="form-input" type="password" id="adminPwInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkAdminPw()">
-    </div>
-    <p id="adminPwError" style="color:var(--accent);font-size:0.82rem;margin-top:0.3rem;display:none">Incorrect password. Try again.</p>
-    <div class="form-actions">
-      <button class="btn btn-outline" onclick="closeModal('adminLoginModal')">Cancel</button>
-      <button class="btn btn-accent" onclick="checkAdminPw()">Login</button>
     </div>
   </div>
 </div>
@@ -380,24 +290,18 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
 //  JSONBIN CONFIG
 // =============================================================
 const MASTER_KEY = '$2a$10$MXDYFEUySgOWylZe0GcoVO1yevehvCe.pfsCOtMx3h7RTmiX8Xb.2';
-const BIN_ID     = '6a226105da38895dfe8a923d'; // YOUR NEW BIN ID IS PLUGGED IN HERE
+const BIN_ID     = '6a226105da38895dfe8a923d';
 const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
 // =============================================================
-//  ADMIN PASSWORD — change this to something only you know
-// =============================================================
-const ADMIN_PASSWORD = 'wiki2025';
-
-// =============================================================
-//  SEED DATA — Everything here will be automatically uploaded 
-//  to your new Bin the first time the page loads!
+//  SEED DATA — Everything here is automatically uploaded
 // =============================================================
 const SEED = {
   entries: [
-    {id:1,title:'Ramadan',religion:'Islam',category:'Celebrations',desc:'The holy month of fasting observed by Muslims worldwide.',body:`Ramadan is the ninth month of the Islamic lunar calendar and is considered the holiest month for Muslims. During this time, those who are physically able fast from dawn (Fajr) to sunset (Maghrib) every day, refraining from food, drink, and other physical needs.\n\nThe fast is broken each evening with a meal called Iftar, which often begins with dates and water, following the tradition of the Prophet Muhammad. A pre-dawn meal called Suhoor is eaten before the fast begins each morning.\n\nBeyond the physical fast, Ramadan is a time of increased prayer, reflection, and community. It ends with the celebration of Eid al-Fitr — a joyful festival marking the breaking of the fast.`,tags:['fasting','prayer','community','eid'],author:'Amira Hassan',year:'Year 10',date:'June 2025',status:'published',image:''},
-    {id:2,title:'Diwali — Festival of Lights',religion:'Hinduism',category:'Celebrations',desc:'A five-day festival marked by lights, family, and the triumph of good over evil.',body:`Diwali, also known as Deepavali, is one of the most widely celebrated festivals in the world. The word comes from the Sanskrit "Deepavali," meaning "row of lights." It is celebrated over five days, with the main celebrations on the third night when families light thousands of small oil lamps called diyas.\n\nFamilies clean and decorate their homes, create colourful rangoli patterns at the entrance, burst fireworks, and share sweets and gifts with neighbours and loved ones.\n\nDiwali holds different meanings across communities: for Hindus it marks Lord Rama's return; for Sikhs it marks the release of Guru Hargobind Ji; for Jains it celebrates the nirvana of Lord Mahavira.`,tags:['lights','diyas','rangoli','fireworks'],author:'Priya Sharma',year:'Year 9',date:'May 2025',status:'published',image:''},
-    {id:3,title:'Shabbat',religion:'Judaism',category:'Customs',desc:'The Jewish day of rest observed every week from Friday sundown to Saturday night.',body:`Shabbat is the Jewish day of rest, observed every week from Friday evening at sundown until Saturday night when three stars appear in the sky.\n\nShabbat begins with the lighting of two candles by the woman of the household. A special Friday night dinner follows, starting with blessings over challah bread and wine. Families gather, sing Shabbat songs, and share a festive meal.\n\nDuring Shabbat, observant Jewish people refrain from 39 categories of work. Instead, the day is spent attending synagogue services, studying Torah, and spending time with family. Shabbat is seen as a gift — a weekly sanctuary of rest.`,tags:['rest','prayer','candles','challah','synagogue'],author:'Daniel Cohen',year:'Year 11',date:'Apr 2025',status:'published',image:''},
-    {id:4,title:'The Five Pillars of Islam',religion:'Islam',category:'Religion',desc:"The five core acts of worship that form the foundation of a Muslim's faith.",body:`The Five Pillars of Islam are the five fundamental acts of worship every Muslim is expected to fulfil.\n\n1. Shahada — The declaration that "There is no god but Allah, and Muhammad is His messenger."\n\n2. Salah — Prayer five times daily facing Mecca: dawn, midday, afternoon, sunset, and night.\n\n3. Zakat — Giving 2.5% of savings annually to those in need.\n\n4. Sawm — Fasting during Ramadan from sunrise to sunset.\n\n5. Hajj — A pilgrimage to Mecca at least once in a lifetime for those who are able.`,tags:['prayer','fasting','charity','pilgrimage','faith'],author:'Yusuf Al-Rashid',year:'Year 12',date:'Mar 2025',status:'published',image:''},
+    {id:1,title:'Ramadan',religion:'Islam',category:'Celebrations',desc:'The holy month of fasting observed by Muslims worldwide.',body:`Ramadan is the ninth month of the Islamic lunar calendar and is considered the holiest month for Muslims. During this time, those who are physically able fast from dawn (Fajr) to sunset (Maghrib) every day, refraining from food, drink, and other physical needs.\n\nThe fast is broken each evening with a meal called Iftar, which often begins with dates and water, following the tradition of the Prophet Muhammad. A pre-dawn meal called Suhoor is eaten before the fast begins each morning.\n\nBeyond the physical fast, Ramadan is a time of increased prayer, reflection, and community. It ends with the celebration of Eid al-Fitr — a joyful festival marking the breaking of the fast.`,tags:['fasting','prayer','community','eid'],author:'Reyan Fernando',year:'Year 9',date:'June 2025',status:'published',image:''},
+    {id:2,title:'Diwali — Festival of Lights',religion:'Hinduism',category:'Celebrations',desc:'A five-day festival marked by lights, family, and the triumph of good over evil.',body:`Diwali, also known as Deepavali, is one of the most widely celebrated festivals in the world. The word comes from the Sanskrit "Deepavali," meaning "row of lights." It is celebrated over five days, with the main celebrations on the third night when families light thousands of small oil lamps called diyas.\n\nFamilies clean and decorate their homes, create colourful rangoli patterns at the entrance, burst fireworks, and share sweets and gifts with neighbours and loved ones.\n\nDiwali holds different meanings across communities: for Hindus it marks Lord Rama's return; for Sikhs it marks the release of Guru Hargobind Ji; for Jains it celebrates the nirvana of Lord Mahavira.`,tags:['lights','diyas','rangoli','fireworks'],author:'Namish Neeli',year:'Year 9',date:'May 2025',status:'published',image:''},
+    {id:3,title:'Shabbat',religion:'Judaism',category:'Customs',desc:'The Jewish day of rest observed every week from Friday sundown to Saturday night.',body:`Shabbat is the Jewish day of rest, observed every week from Friday evening at sundown until Saturday night when three stars appear in the sky.\n\nShabbat begins with the lighting of two candles by the woman of the household. A special Friday night dinner follows, starting with blessings over challah bread and wine. Families gather, sing Shabbat songs, and share a festive meal.\n\nDuring Shabbat, observant Jewish people refrain from 39 categories of work. Instead, the day is spent attending synagogue services, studying Torah, and spending time with family. Shabbat is seen as a gift — a weekly sanctuary of rest.`,tags:['rest','prayer','candles','challah','synagogue'],author:'Arhan Yadav',year:'Year 9',date:'Apr 2025',status:'published',image:''},
+    {id:4,title:'The Five Pillars of Islam',religion:'Islam',category:'Religion',desc:"The five core acts of worship that form the foundation of a Muslim's faith.",body:`The Five Pillars of Islam are the five fundamental acts of worship every Muslim is expected to fulfil.\n\n1. Shahada — The declaration that "There is no god but Allah, and Muhammad is His messenger."\n\n2. Salah — Prayer five times daily facing Mecca: dawn, midday, afternoon, sunset, and night.\n\n3. Zakat — Giving 2.5% of savings annually to those in need.\n\n4. Sawm — Fasting during Ramadan from sunrise to sunset.\n\n5. Hajj — A pilgrimage to Mecca at least once in a lifetime for those who are able.`,tags:['prayer','fasting','charity','pilgrimage','faith'],author:'Reyan Fernando',year:'Year 9',date:'Mar 2025',status:'published',image:''},
     {id:6,title:'Lunar New Year',religion:'Chinese culture',category:'Celebrations',desc:'The festival that celebrates the beginning of a new year on the traditional lunisolar Chinese calendar.',body:`Lunar New Year, commonly known as the Spring Festival, marks the end of winter and the beginning of spring. Families gather for an annual reunion dinner, clean their homes to sweep away ill-fortune, and give red envelopes (hongbao) containing money for good luck.\n\nThe celebrations often last for 15 days, featuring vibrant dragon and lion dances, firecrackers, and beautiful lantern displays to conclude the festivities.`,tags:['spring','hongbao','family','dragon dance'],author:'William LEE',year:'Year 9',date:'June 2026',status:'published',image:''},
     {id:7,title:'Tết',religion:'Vietnamese culture',category:'Celebrations',desc:'The most important celebration in Vietnamese culture, marking the arrival of spring.',body:`Tết Nguyên Đán, or simply Tết, celebrates the Vietnamese New Year and marks the arrival of spring based on the lunisolar calendar.\n\nIt is a time for family reunions, paying respects to ancestors, and enjoying special holiday foods like bánh chưng (a traditional sticky rice cake). People clean their homes to prepare for the new year, decorate with beautiful peach or apricot blossoms, and elders give lucky money (mừng tuổi) to children in red envelopes.`,tags:['spring','bánh chưng','ancestors','lucky money'],author:'Austin Ashman',year:'Year 9',date:'June 2026',status:'published',image:''},
     {id:8,title:'Holi',religion:'Hinduism',category:'Celebrations',desc:'The vibrant Hindu festival of colors celebrating love, spring, and the triumph of good over evil.',body:`Holi is a joyous ancient Hindu festival where people gather in the streets and parks to throw colored powders (gulal) and water at each other.\n\nThe festival begins with Holika Dahan, a bonfire lit the night before to symbolize the victory of good over evil, specifically the burning of the demoness Holika. The following day is filled with festive play, dancing, and sharing sweet treats like gujiya with friends and neighbors.`,tags:['colors','spring','gulal','bonfire'],author:'Ayush Mukherjee',year:'Year 9',date:'June 2026',status:'published',image:''},
@@ -427,7 +331,7 @@ const REL_COLORS = ['#b8922a','#c85a2a','#4a6741','#2a4a8a','#7a3a8a','#8a4a2a',
 //  STATE
 // =============================================================
 let entries = [], pendingEntries = [], accessRequests = [];
-let isAdmin = false, currentFilter = 'All', currentReligionFilter = 'All';
+let currentFilter = 'All', currentReligionFilter = 'All';
 let isConfigured = false;
 
 // =============================================================
@@ -438,14 +342,13 @@ function checkConfig() { return MASTER_KEY.length > 10 && BIN_ID.length > 10; }
 // =============================================================
 //  JSONBIN API — single source of truth for ALL devices
 // =============================================================
-async function loadData(isAdminRefresh = false) {
+async function loadData() {
   if (!checkConfig()) {
     entries = JSON.parse(JSON.stringify(SEED.entries));
     pendingEntries = JSON.parse(JSON.stringify(SEED.pending));
     accessRequests = JSON.parse(JSON.stringify(SEED.access));
     hideLoader();
     refreshUI();
-    if (isAdminRefresh) renderAdminPanel();
     return;
   }
   isConfigured = true;
@@ -457,9 +360,9 @@ async function loadData(isAdminRefresh = false) {
     const json = await res.json();
     const data = json.record;
     
-    // IF THE BIN HAS NEVER BEEN SEEDED, FORCE SEED ALL ENTRIES NOW
-    if (!data.seeded) {
-      const seedPayload = Object.assign({}, SEED, { seeded: true });
+    // IF THE BIN HAS NOT BEEN UPDATED WITH V2 AUTHORS, FORCE SEED ALL ENTRIES NOW
+    if (!data.seeded_v2) {
+      const seedPayload = Object.assign({}, SEED, { seeded: true, seeded_v2: true });
       await saveData(seedPayload);
       entries        = JSON.parse(JSON.stringify(SEED.entries));
       pendingEntries = JSON.parse(JSON.stringify(SEED.pending));
@@ -476,12 +379,11 @@ async function loadData(isAdminRefresh = false) {
   }
   hideLoader();
   refreshUI();
-  if (isAdminRefresh) renderAdminPanel();
 }
 
 async function saveData(override) {
   if (!checkConfig()) return; // Don't try to save if not configured
-  const payload = override || { seeded: true, entries, pending: pendingEntries, access: accessRequests };
+  const payload = override || { seeded: true, seeded_v2: true, entries, pending: pendingEntries, access: accessRequests };
   try {
     const res = await fetch(JSONBIN_URL, {
       method: 'PUT',
@@ -616,13 +518,9 @@ function renderGrid(list) {
 function showEntry(id) {
   const e = entries.find(x => x.id === id);
   if (!e) return;
-  _populateDetail(e, false);
-  showPage('detail');
-}
-
-function _populateDetail(e, isPending) {
+  
   document.getElementById('detailBar').style.background = CAT_COLOR[e.category] || '#b8922a';
-  document.getElementById('detailRel').textContent = e.religion + (isPending ? '  [PENDING — not yet published]' : '');
+  document.getElementById('detailRel').textContent = e.religion;
   document.getElementById('detailTitle').textContent = e.title;
   document.getElementById('detailSub').textContent = e.desc;
   document.getElementById('detailTags').innerHTML = (e.tags||[]).map(t => `<span class="detail-tag">${escHtml(t)}</span>`).join('');
@@ -633,179 +531,9 @@ function _populateDetail(e, isPending) {
   document.getElementById('metaAuthor').textContent = e.author;
   document.getElementById('metaYear').textContent   = e.year;
   document.getElementById('metaCat').textContent    = e.category;
-  document.getElementById('metaDate').textContent   = isPending ? 'Pending review' : e.date;
-  document.getElementById('detailBackBtn').onclick  = isPending ? () => showPage('admin') : () => showPage('home');
-}
-
-// =============================================================
-//  ADMIN AUTH
-// =============================================================
-function openAdminLogin() {
-  document.getElementById('adminPwInput').value = '';
-  document.getElementById('adminPwError').style.display = 'none';
-  document.getElementById('adminLoginModal').style.display = 'flex';
-  setTimeout(() => document.getElementById('adminPwInput').focus(), 100);
-}
-
-function checkAdminPw() {
-  if (document.getElementById('adminPwInput').value === ADMIN_PASSWORD) {
-    isAdmin = true;
-    closeModal('adminLoginModal');
-    renderAdminPanel();
-    showPage('admin');
-  } else {
-    document.getElementById('adminPwError').style.display = 'block';
-  }
-}
-
-function logoutAdmin() { isAdmin = false; showPage('home'); }
-
-function switchAdminTab(tab, el) {
-  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  document.querySelectorAll('.admin-tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-}
-
-// =============================================================
-//  ADMIN RENDER
-// =============================================================
-function renderAdminPanel() {
-  // PENDING
-  document.getElementById('pendingCount').textContent = pendingEntries.length || '';
-  const pl = document.getElementById('pendingList');
-  const pe = document.getElementById('pendingEmpty');
-  if (pendingEntries.length === 0) { pl.innerHTML = ''; pe.style.display = ''; }
-  else {
-    pe.style.display = 'none';
-    pl.innerHTML = pendingEntries.map(e => `
-      <div class="pcard" id="pcard-${e.id}">
-        ${e.image ? `<img class="pcard-img" src="${e.image}" alt="${escHtml(e.title)}">` : ''}
-        <h4>${escHtml(e.title)} <span class="pending-badge">● Pending</span></h4>
-        <div class="pmeta">${escHtml(e.religion)} · ${escHtml(e.category)} · ${escHtml(e.author)} (${escHtml(e.year)}) · Submitted ${escHtml(e.date)}</div>
-        <div class="pbody">${escHtml((e.body||'').substring(0,240))}…</div>
-        <div class="pcard-actions">
-          <button class="btn btn-sage" onclick="approveEntry(${e.id})">✓ Approve &amp; publish live</button>
-          <button class="btn btn-danger" onclick="rejectEntry(${e.id})">✕ Reject</button>
-          <button class="btn btn-outline" onclick="previewPending(${e.id})">Preview</button>
-        </div>
-      </div>`).join('');
-  }
-
-  // PUBLISHED
-  const pub = entries.filter(e => e.status === 'published');
-  const pubList = document.getElementById('publishedList');
-  const pubEmpty = document.getElementById('publishedEmpty');
-  if (pub.length === 0) { pubList.innerHTML = ''; pubEmpty.style.display = ''; }
-  else {
-    pubEmpty.style.display = 'none';
-    pubList.innerHTML = pub.map(e => `
-      <div class="pcard">
-        <h4>${escHtml(e.title)} <span class="live-badge">● Live</span></h4>
-        <div class="pmeta">${escHtml(e.religion)} · ${escHtml(e.category)} · ${escHtml(e.author)} · ${escHtml(e.date)}</div>
-        <div class="pbody">${escHtml(e.desc)}</div>
-        <div class="pcard-actions">
-          <button class="btn btn-outline" onclick="previewPublished(${e.id})">View entry</button>
-          <button class="btn btn-danger" onclick="removeEntry(${e.id})">Remove from site</button>
-        </div>
-      </div>`).join('');
-  }
-
-  // ACCESS REQUESTS
-  document.getElementById('accessCount').textContent = accessRequests.length || '';
-  const al = document.getElementById('accessList');
-  const ae = document.getElementById('accessEmpty');
-  if (accessRequests.length === 0) { al.innerHTML = ''; ae.style.display = ''; }
-  else {
-    ae.style.display = 'none';
-    al.innerHTML = accessRequests.map(r => `
-      <div class="acard" id="acard-${r.id}">
-        <div class="ainfo">
-          <div class="aname">${escHtml(r.name)}</div>
-          <div class="ameta">${escHtml(r.year)} · ${escHtml(r.email)}</div>
-          <div class="ameta">Wants to write about: <strong>${escHtml(r.culture)}</strong></div>
-          <div class="ameta" style="margin-top:4px;font-style:italic">"${escHtml(r.reason)}"</div>
-          <div class="ameta" style="margin-top:2px">Submitted: ${escHtml(r.date)}</div>
-        </div>
-        <div style="display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap;align-self:flex-start">
-          <button class="btn btn-sage" onclick="approveAccess(${r.id})">Approve</button>
-          <button class="btn btn-danger" onclick="denyAccess(${r.id})">Deny</button>
-        </div>
-      </div>`).join('');
-  }
-}
-
-// =============================================================
-//  ADMIN ACTIONS — each saves to JSONBin so ALL devices update
-// =============================================================
-async function approveEntry(id) {
-  const idx = pendingEntries.findIndex(e => e.id === id);
-  if (idx === -1) return;
-  const btn = event.target;
-  btn.textContent = 'Publishing…'; btn.disabled = true;
-  try {
-    const e = pendingEntries.splice(idx, 1)[0];
-    e.status = 'published';
-    e.date = new Date().toLocaleString('default', { month:'long', year:'numeric' });
-    entries.push(e);
-    await saveData(); // saves to cloud — all devices see it immediately
-    renderAdminPanel(); refreshUI();
-    showToast('✅ Entry is now LIVE on all devices!');
-  } catch(err) {
-    btn.textContent = '✓ Approve & publish live'; btn.disabled = false;
-  }
-}
-
-async function rejectEntry(id) {
-  pendingEntries = pendingEntries.filter(e => e.id !== id);
-  try {
-    await saveData();
-    renderAdminPanel();
-    showToast('Entry rejected and removed.');
-  } catch(err) {}
-}
-
-function previewPending(id) {
-  const e = pendingEntries.find(x => x.id === id);
-  if (!e) return;
-  _populateDetail(e, true);
+  document.getElementById('metaDate').textContent   = e.date;
+  
   showPage('detail');
-}
-
-function previewPublished(id) {
-  const e = entries.find(x => x.id === id);
-  if (!e) return;
-  _populateDetail(e, false);
-  document.getElementById('detailBackBtn').onclick = () => showPage('admin');
-  showPage('detail');
-}
-
-async function removeEntry(id) {
-  if (!confirm('Remove this entry from the site? This cannot be undone.')) return;
-  entries = entries.filter(e => e.id !== id);
-  try {
-    await saveData(); // saves to cloud — removed on all devices immediately
-    renderAdminPanel(); refreshUI();
-    showToast('Entry removed from the website on all devices.');
-  } catch(err) {}
-}
-
-async function approveAccess(id) {
-  accessRequests = accessRequests.filter(r => r.id !== id);
-  try {
-    await saveData();
-    renderAdminPanel();
-    showToast('✅ Access approved!');
-  } catch(err) {}
-}
-
-async function denyAccess(id) {
-  accessRequests = accessRequests.filter(r => r.id !== id);
-  try {
-    await saveData();
-    renderAdminPanel();
-    showToast('Access request denied.');
-  } catch(err) {}
 }
 
 // =============================================================
