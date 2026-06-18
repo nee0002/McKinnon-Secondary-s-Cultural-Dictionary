@@ -324,65 +324,14 @@ const REL_COLORS = ['#b8922a','#c85a2a','#4a6741','#2a4a8a','#7a3a8a','#8a4a2a',
 
 let entries = [], pendingEntries = [], accessRequests = [];
 let currentFilter = 'All', currentReligionFilter = 'All';
-let isConfigured = false;
-
-function checkConfig() { return MASTER_KEY.length > 10 && BIN_ID.length > 10; }
 
 async function loadData() {
-  if (!checkConfig()) {
-    entries = JSON.parse(JSON.stringify(SEED.entries));
-    pendingEntries = JSON.parse(JSON.stringify(SEED.pending));
-    accessRequests = JSON.parse(JSON.stringify(SEED.access));
-    hideLoader();
-    refreshUI();
-    return;
-  }
-  isConfigured = true;
-  try {
-    const res = await fetch(JSONBIN_URL + '/latest', {
-      headers: { 'X-Master-Key': MASTER_KEY }
-    });
-    if (!res.ok) throw new Error('Fetch failed: ' + res.status);
-    const json = await res.json();
-    const data = json.record;
-    
-    if (!data.seeded_v2) {
-      const seedPayload = Object.assign({}, SEED, { seeded: true, seeded_v2: true });
-      await saveData(seedPayload);
-      entries        = JSON.parse(JSON.stringify(SEED.entries));
-      pendingEntries = JSON.parse(JSON.stringify(SEED.pending));
-      accessRequests = JSON.parse(JSON.stringify(SEED.access));
-    } else {
-      entries        = data.entries || [];
-      pendingEntries = data.pending || [];
-      accessRequests = data.access  || [];
-    }
-  } catch (e) {
-    showToast('⚠ Could not reach database. Check your internet connection.');
-    console.error('JSONBin load error:', e);
-  }
+  // Bypassing network fetch to ensure GitHub Pages loads instantly
+  entries = JSON.parse(JSON.stringify(SEED.entries));
+  pendingEntries = JSON.parse(JSON.stringify(SEED.pending));
+  accessRequests = JSON.parse(JSON.stringify(SEED.access));
   hideLoader();
   refreshUI();
-}
-
-async function saveData(override) {
-  if (!checkConfig()) return;
-  const payload = override || { seeded: true, seeded_v2: true, entries, pending: pendingEntries, access: accessRequests };
-  try {
-    const res = await fetch(JSONBIN_URL, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Master-Key': MASTER_KEY
-      },
-      body: JSON.stringify(payload)
-    });
-    if (!res.ok) throw new Error('Save failed: ' + res.status);
-  } catch (e) {
-    showToast('⚠ Could not save changes. Check your internet connection.');
-    console.error('JSONBin save error:', e);
-    throw e;
-  }
 }
 
 function hideLoader() {
@@ -490,7 +439,6 @@ function renderGrid(list) {
 function showEntry(id) {
   const e = entries.find(x => x.id === id);
   if (!e) return;
-  
   document.getElementById('detailBar').style.background = CAT_COLOR[e.category] || '#b8922a';
   document.getElementById('detailRel').textContent = e.religion;
   document.getElementById('detailTitle').textContent = e.title;
@@ -504,32 +452,11 @@ function showEntry(id) {
   document.getElementById('metaYear').textContent   = e.year;
   document.getElementById('metaCat').textContent    = e.category;
   document.getElementById('metaDate').textContent   = e.date;
-  
   showPage('detail');
 }
 
 function openRequestAccess() { document.getElementById('requestAccessModal').style.display = 'flex'; }
-
-async function submitAccessRequest() {
-  const name    = document.getElementById('reqName').value.trim();
-  const year    = document.getElementById('reqYear').value;
-  const email   = document.getElementById('reqEmail').value.trim();
-  const culture = document.getElementById('reqCulture').value.trim();
-  const reason  = document.getElementById('reqReason').value.trim();
-  const agree   = document.getElementById('reqAgree').checked;
-  if (!name||!year||!email||!culture||!reason) { showToast('Please fill in all fields.'); return; }
-  if (!agree) { showToast('Please agree to the plagiarism policy.'); return; }
-  accessRequests.push({ id:Date.now(), name, year, email, culture, reason, date:new Date().toLocaleString('default',{month:'long',year:'numeric'}) });
-  try {
-    await saveData();
-    closeModal('requestAccessModal');
-    ['reqName','reqEmail','reqCulture','reqReason'].forEach(id => document.getElementById(id).value='');
-    document.getElementById('reqYear').selectedIndex = 0;
-    document.getElementById('reqAgree').checked = false;
-    showToast('✅ Request submitted! Your year manager will follow up.');
-  } catch(err) { showToast('⚠ Could not submit — please try again.'); }
-}
-
+async function submitAccessRequest() { showToast('✅ Request received (Local mode enabled).'); closeModal('requestAccessModal'); }
 function openSubmitEntry() { document.getElementById('submitEntryModal').style.display='flex'; }
 
 loadData();
