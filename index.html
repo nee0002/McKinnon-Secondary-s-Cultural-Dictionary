@@ -109,7 +109,6 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
 .empty-icon{font-size:2.5rem;margin-bottom:0.75rem}
 .empty h3{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink2);margin-bottom:0.4rem}
 .empty p{font-size:0.88rem}
-/* Loading overlay */
 .loading-overlay{position:fixed;inset:0;background:var(--bg);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;transition:opacity 0.4s}
 .loading-overlay.hidden{opacity:0;pointer-events:none}
 .spinner{width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
@@ -286,16 +285,10 @@ body{background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.6}
 <div class="toast" id="toast"></div>
 
 <script>
-// =============================================================
-//  JSONBIN CONFIG
-// =============================================================
 const MASTER_KEY = '$2a$10$MXDYFEUySgOWylZe0GcoVO1yevehvCe.pfsCOtMx3h7RTmiX8Xb.2';
 const BIN_ID     = '6a226105da38895dfe8a923d';
 const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-// =============================================================
-//  SEED DATA — Everything here is automatically uploaded
-// =============================================================
 const SEED = {
   entries: [
     {id:1,title:'Ramadan',religion:'Islam',category:'Celebrations',desc:'The holy month of fasting observed by Muslims worldwide.',body:`Ramadan is the ninth month of the Islamic lunar calendar and is considered the holiest month for Muslims. During this time, those who are physically able fast from dawn (Fajr) to sunset (Maghrib) every day, refraining from food, drink, and other physical needs.\n\nThe fast is broken each evening with a meal called Iftar, which often begins with dates and water, following the tradition of the Prophet Muhammad. A pre-dawn meal called Suhoor is eaten before the fast begins each morning.\n\nBeyond the physical fast, Ramadan is a time of increased prayer, reflection, and community. It ends with the celebration of Eid al-Fitr — a joyful festival marking the breaking of the fast.`,tags:['fasting','prayer','community','eid'],author:'Reyan Fernando',year:'Year 9',date:'June 2025',status:'published',image:''},
@@ -308,7 +301,12 @@ const SEED = {
     {id:9,title:'Aluth Avurudda',religion:'Sinhalese culture',category:'Celebrations',desc:'The Sinhalese New Year, an important national festival in Sri Lanka marked by rituals and traditional games.',body:`Aluth Avurudda is the Sinhalese New Year, celebrated generally on the 13th or 14th of April. It marks the end of the harvest season and the astrological movement of the sun from Meena to Mesha (Pisces to Aries).\n\nFamilies observe specific auspicious times (Nekath) for lighting the hearth, cooking traditional milk rice (Kiribath), and exchanging gifts. The community gathers for traditional games and playing the rabana (a traditional drum).`,tags:['harvest','kiribath','astrology','games'],author:'Lahiru Samarkody',year:'Year 9',date:'June 2026',status:'published',image:''},
     {id:10,title:'Qingming Festival',religion:'Chinese culture',category:'Customs',desc:'Tomb-Sweeping Day, a traditional Chinese festival to remember and honor ancestors.',body:`The Qingming Festival, also known as Tomb-Sweeping Day, is observed in early April. It is a time for people to remember and honor their ancestors.\n\nFamilies visit the graves of their loved ones to clean the gravesites, pull weeds, pray, and make ritual offerings of traditional food dishes and joss paper (spirit money). While it is a day of remembrance, it is also a celebration of the arrival of spring, often marked by family outings and flying kites.`,tags:['ancestors','remembrance','offerings','spring'],author:'Max Jiang',year:'Year 9',date:'June 2026',status:'published',image:''},
     {id:11,title:'Chaharshanbe Suri',religion:'Persian culture',category:'Celebrations',desc:'An ancient Iranian festival of fire celebrated on the eve of the last Wednesday before Nowruz.',body:`Chaharshanbe Suri translates to "Festive Wednesday" and serves as a prelude to Nowruz, the Persian New Year.\n\nThe main tradition involves lighting bonfires in the streets and jumping over them. As people jump, they chant a traditional rhyme, asking the fire to take away their pallor and sickness, and to give them its red color, symbolizing health, warmth, and vitality for the new year.`,tags:['fire','nowruz','purification','health'],author:'Tiam Salehi',year:'Year 9',date:'June 2026',status:'published',image:''},
-    {id:12,title:'Christmas',religion:'Christianity',category:'Celebrations',desc:'An annual Christian festival commemorating the birth of Jesus Christ, observed with religious and cultural traditions.',body:`Christmas is celebrated on December 25th by billions of people around the world to honor the birth of Jesus of Nazareth.\n\nReligious observances often include attending midnight Mass or special church services. Culturally, the holiday is celebrated with the exchanging of gifts, decorating Christmas trees, singing carols, and sharing festive meals with family. Figures like Santa Claus have also become a major part of the secular celebration.`,tags:['jesus','gifts','family','church'],author:'Patrick Lowernstern',year:'Year 9',date:'June 2026',status:'published',image:''}
+    {id:12,title:'Christmas',religion:'Christianity',category:'Celebrations',desc:'An annual Christian festival commemorating the birth of Jesus Christ, observed with religious and cultural traditions.',body:`Christmas is celebrated on December 25th by billions of people around the world to honor the birth of Jesus of Nazareth.\n\nReligious observances often include attending midnight Mass or special church services. Culturally, the holiday is celebrated with the exchanging of gifts, decorating Christmas trees, singing carols, and sharing festive meals with family. Figures like Santa Claus have also become a major part of the secular celebration.`,tags:['jesus','gifts','family','church'],author:'Patrick Lowernstern',year:'Year 9',date:'June 2026',status:'published',image:''},
+    {id:13,title:'Apokries (Carnival)',religion:'Greek Culture',category:'Celebrations',desc:'The Greek pre-Lenten carnival season filled with costumes, parades, and parties.',body:`Apokries, which translates to "abstinence from meat," is the Greek carnival season leading up to Great Lent. It is a time of joy, masks, costumes, and public festivities.\n\nThe final week, known as Tyrini week (Cheese week), is the last time dairy products can be consumed before the strict fasting period begins. In many cities, huge parades are held with floats and people dressed in elaborate costumes, celebrating before the solemnity of Lent.`,tags:['costumes','carnival','parades','fasting'],author:'Panagiotis Yfantis',year:'Year 9',date:'June 2026',status:'published',image:''},
+    {id:14,title:'Panigiria',religion:'Greek Culture',category:'Customs',desc:'Traditional religious festivals held in honor of a local saint or patron.',body:`A Panigiri is a traditional Greek festival centered around the celebration of a church's patron saint. These festivals are usually held in village squares or near churches and are a vital part of community life.\n\nThey feature traditional Greek folk music (dimotika), dancing, and communal feasts. It is a time for people who have moved away to return to their home villages, strengthening local bonds and keeping heritage alive through shared celebration and faith.`,tags:['tradition','dance','community','saint'],author:'Panagiotis Yfantis',year:'Year 9',date:'June 2026',status:'published',image:''},
+    {id:15,title:'Athens Epidaurus Festival',religion:'Greek Culture',category:'Celebrations',desc:'A renowned summer arts festival showcasing ancient drama, music, and dance.',body:`The Athens Epidaurus Festival is one of the oldest and most prestigious arts festivals in Europe. Held annually during the summer, it showcases performances in ancient theaters, most notably the Ancient Theatre of Epidaurus and the Odeon of Herodes Atticus in Athens.\n\nIt brings ancient Greek tragedy and comedy to life, along with contemporary music and dance performances, attracting artists and visitors from all over the world to experience culture in these historic, open-air venues.`,tags:['arts','theater','music','heritage'],author:'Peter Strintzos',year:'Year 9',date:'June 2026',status:'published',image:''},
+    {id:16,title:'Name Days (Ostromastikes)',religion:'Greek Culture',category:'Customs',desc:'A tradition where individuals celebrate the feast day of the saint they were named after.',body:`In Greece, Name Days are often celebrated with as much, or sometimes even more, enthusiasm than birthdays. Because many Greeks are named after Orthodox saints, they celebrate on the specific calendar day dedicated to that saint.\n\nIt is common for friends and family to visit, offer wishes, and give small gifts. The person celebrating often hosts an open house or invites friends for a treat, keeping the connection between family names and religious tradition strong.`,tags:['saints','tradition','celebration','family'],author:'Peter Strintzos',year:'Year 9',date:'June 2026',status:'published',image:''},
+    {id:17,title:'Easter (Pascha)',religion:'Christianity',category:'Celebrations',desc:'The most significant religious holiday in the Greek Orthodox calendar.',body:`Easter, or Pascha, is the cornerstone of the Greek Orthodox faith. It marks the resurrection of Jesus Christ and is preceded by the 40-day Great Lent.\n\nKey traditions include the Holy Saturday midnight service, where the "Holy Light" is passed among congregants, and the subsequent breaking of the fast with magiritsa soup. On Easter Sunday, communities gather for a large feast, traditionally featuring roasted lamb, red-dyed eggs, and tsoureki (sweet bread), symbolizing the joy of the resurrection.`,tags:['resurrection','faith','feast','tradition'],author:'Samarth Sharath',year:'Year 9',date:'June 2026',status:'published',image:''}
   ],
   pending: [
     {id:101,title:'The Holy Trinity',religion:'Christianity',category:'Religion',desc:"The Christian doctrine of one God in three persons: Father, Son and Holy Spirit.",body:`The Trinity is one of the central doctrines of Christianity. It teaches that God exists as three distinct persons — the Father, the Son (Jesus Christ), and the Holy Spirit — who are each fully God yet are one God.\n\nThis doctrine is affirmed throughout the New Testament and was formally articulated in the Nicene Creed (325 AD), a foundational statement of Christian belief across denominations.`,tags:['God','Jesus','Holy Spirit','doctrine'],author:'Grace Okonkwo',year:'Year 9',date:'June 2025',status:'pending',image:''}
@@ -318,30 +316,18 @@ const SEED = {
   ]
 };
 
-// =============================================================
-//  CATEGORY HELPERS
-// =============================================================
 const CAT_COLOR = {Religion:'#b8922a',Food:'#c85a2a',Customs:'#4a6741',Celebrations:'#2a4a8a',Clothing:'#7a3a8a',Language:'#8a4a2a'};
 const CAT_BG    = {Religion:'#f5e6c0',Food:'#fde8d8',Customs:'#d8e8d0',Celebrations:'#d0daf5',Clothing:'#ecd8f5',Language:'#f5dac8'};
 const CAT_TEXT  = {Religion:'#6a4a10',Food:'#7a2e0e',Customs:'#2a4a22',Celebrations:'#1a2e5a',Clothing:'#4a1a5a',Language:'#4a2010'};
 const CAT_CLASS = {Religion:'cat-religion',Food:'cat-food',Customs:'cat-customs',Celebrations:'cat-celebrations',Clothing:'cat-clothing',Language:'cat-language'};
 const REL_COLORS = ['#b8922a','#c85a2a','#4a6741','#2a4a8a','#7a3a8a','#8a4a2a','#3a7a8a','#6a3a2a'];
 
-// =============================================================
-//  STATE
-// =============================================================
 let entries = [], pendingEntries = [], accessRequests = [];
 let currentFilter = 'All', currentReligionFilter = 'All';
 let isConfigured = false;
 
-// =============================================================
-//  CHECK CONFIG
-// =============================================================
 function checkConfig() { return MASTER_KEY.length > 10 && BIN_ID.length > 10; }
 
-// =============================================================
-//  JSONBIN API — single source of truth for ALL devices
-// =============================================================
 async function loadData() {
   if (!checkConfig()) {
     entries = JSON.parse(JSON.stringify(SEED.entries));
@@ -360,7 +346,6 @@ async function loadData() {
     const json = await res.json();
     const data = json.record;
     
-    // IF THE BIN HAS NOT BEEN UPDATED WITH V2 AUTHORS, FORCE SEED ALL ENTRIES NOW
     if (!data.seeded_v2) {
       const seedPayload = Object.assign({}, SEED, { seeded: true, seeded_v2: true });
       await saveData(seedPayload);
@@ -368,7 +353,6 @@ async function loadData() {
       pendingEntries = JSON.parse(JSON.stringify(SEED.pending));
       accessRequests = JSON.parse(JSON.stringify(SEED.access));
     } else {
-      // Normal load — always trust what is in the database
       entries        = data.entries || [];
       pendingEntries = data.pending || [];
       accessRequests = data.access  || [];
@@ -382,7 +366,7 @@ async function loadData() {
 }
 
 async function saveData(override) {
-  if (!checkConfig()) return; // Don't try to save if not configured
+  if (!checkConfig()) return;
   const payload = override || { seeded: true, seeded_v2: true, entries, pending: pendingEntries, access: accessRequests };
   try {
     const res = await fetch(JSONBIN_URL, {
@@ -397,7 +381,7 @@ async function saveData(override) {
   } catch (e) {
     showToast('⚠ Could not save changes. Check your internet connection.');
     console.error('JSONBin save error:', e);
-    throw e; // Re-throw so callers can handle
+    throw e;
   }
 }
 
@@ -413,9 +397,6 @@ function refreshUI() {
   filterEntries();
 }
 
-// =============================================================
-//  UTILITY
-// =============================================================
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
@@ -433,9 +414,6 @@ function showPage(p) {
 }
 function scrollToWiki() { document.getElementById('wikiTop').scrollIntoView({ behavior: 'smooth' }); }
 
-// =============================================================
-//  STATS
-// =============================================================
 function renderStats() {
   const pub = entries.filter(e => e.status === 'published');
   document.getElementById('stat-entries').textContent = pub.length;
@@ -443,9 +421,6 @@ function renderStats() {
   document.getElementById('stat-contributors').textContent = [...new Set(pub.map(e => e.author))].length;
 }
 
-// =============================================================
-//  SIDEBAR
-// =============================================================
 function renderSidebar() {
   const pub = entries.filter(e => e.status === 'published');
   const religions = [...new Set(pub.map(e => e.religion))];
@@ -479,9 +454,6 @@ function setFilter(val, el) {
   renderSidebar(); filterEntries();
 }
 
-// =============================================================
-//  GRID
-// =============================================================
 function filterEntries() {
   const q = document.getElementById('searchBox').value.toLowerCase();
   const pub = entries.filter(e => e.status === 'published');
@@ -536,9 +508,6 @@ function showEntry(id) {
   showPage('detail');
 }
 
-// =============================================================
-//  REQUEST ACCESS
-// =============================================================
 function openRequestAccess() { document.getElementById('requestAccessModal').style.display = 'flex'; }
 
 async function submitAccessRequest() {
@@ -561,14 +530,8 @@ async function submitAccessRequest() {
   } catch(err) { showToast('⚠ Could not submit — please try again.'); }
 }
 
-// =============================================================
-//  SUBMIT ENTRY
-// =============================================================
 function openSubmitEntry() { document.getElementById('submitEntryModal').style.display='flex'; }
 
-// =============================================================
-//  BOOT
-// =============================================================
 loadData();
 </script>
 </body>
